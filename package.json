@@ -14,7 +14,6 @@
   },
   "scripts":{
     "start":"node index",
-    "test":"concurrently \"nodemon\" \"cd client && yarn start\" ",
-    "heroku-postbuild":"cd client && yarn build"
+    "test":"concurrently \"nodemon\" \"cd client && yarn start\" "
   }
 }
