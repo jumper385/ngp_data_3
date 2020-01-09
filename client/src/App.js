@@ -57,7 +57,13 @@ const App = props => {
         <Switch>
 
           <Route exact path='/'>
-            Home Page...
+            <div>
+              <p style={{textAlign:'center'}}>Yet to add any statistics or anything so here's a nice picture of a cat 🐈</p>
+              
+              <br />
+              <br />
+              <img style={{width:'33.3333%'}} src='https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80' />
+            </div>
           </Route>
 
           <Route path='/recording'>
