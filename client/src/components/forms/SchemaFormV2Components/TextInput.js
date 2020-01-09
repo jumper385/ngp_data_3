@@ -13,6 +13,11 @@ const StyledTextInput = styled.input`
     color:rgba(0,0,0,.84);
     box-shadow: 0 0pt 2px #ecf0f1, inset 0 0pt 2px #ecf0f1;
     width:100%;
+
+    ::placeholder {
+        color:rgba(0,0,0,.18);
+    }
+
 `
 
 export const TextInput = props => {

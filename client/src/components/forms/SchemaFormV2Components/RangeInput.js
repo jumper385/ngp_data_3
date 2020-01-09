@@ -29,7 +29,7 @@ const StyledRangeInput = styled.input`
 export const RangeInput = props => {
     return(
         <StyledInputComponent>
-            <p className='inputLabel'>{props.label} - {props ? props.value || 'No Rating Yet...': 'No Rating...'}</p>
+            <p className='inputLabel'>{props.label} (low:{props.min} - high:{props.max}) - {props ? props.value || 'No Rating Yet...': 'No Rating...'}</p>
             <StyledRangeInput
                 type='range' 
                 value={props.value} 

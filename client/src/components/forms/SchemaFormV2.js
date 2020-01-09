@@ -93,12 +93,11 @@ export const SchemaFormV2 = props => {
 
     return(
         <div>
-            <h1 style={{textAlign:'center'}}>🎙🎙🎙</h1>
             <StyledForm onSubmit={onSubmit}>
                 {schema.map((obj, index) => {
                     return <Input {...obj} onChange={onChange} key={index} resetForm={state.readyToReset}/>
                 })}
-                <StyledFormSubmit type='submit'/>
+                <StyledFormSubmit disabled={state.payload ? false : true} type='submit'/>
             </StyledForm>
         </div>
     )

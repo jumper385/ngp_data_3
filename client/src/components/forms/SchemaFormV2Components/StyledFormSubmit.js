@@ -9,7 +9,7 @@ export const StyledFormSubmit = styled.input`
     margin:0;
     border:none;
     border-radius:6pt;
-    background:#2ecc71;
+    background:${props => props.disabled ? '#bdc3c7' : '#2ecc71'};
     font-weight:bold;
     color:white;
 `

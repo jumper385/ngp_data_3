@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { SchemaForm } from '../components/forms/schemaForm'
+import { SchemaFormV2 } from '../components/forms/SchemaFormV2'
 
 const Food = props => {
 
@@ -8,30 +8,25 @@ const Food = props => {
     useEffect(() => {
 
         if(props.onSubmit && state.readyToSubmit===true){
-            props.onSubmit(state)
+            props.onSubmit(state.food)
             setState({readyToSubmit:false})
-        }
-        if(props.onChange && state.readyToChange==true){
-            props.onChange(state)
-            setState({...state, readyToChange:false})
         }
 
     })
 
     const onSubmit = e => {
-        setState({...state, readyToSubmit:true})
-    }
-
-    const onChange = e => {
-        setState({...state, ...e, readyToChange:true})
+        if(e){
+            let newPayload = {...e, timestamp:new Date()}
+            setState({...state, food:newPayload, readyToSubmit:true})
+        }
     }
 
     return(
         <div>
-            <SchemaForm schema={[
+            <SchemaFormV2 schema={[
                 {type:'text',name:'foodName',label:'Food Name'},
                 {type:'text',name:'components',label:'Food Components',hint:'e.g. Nuts, Pepper, Oil, Wheat'},
-            ]} onSubmit={onSubmit} onChange={onChange}/>
+            ]} onReadyForm={onSubmit}/>
         </div>
     )
 }
