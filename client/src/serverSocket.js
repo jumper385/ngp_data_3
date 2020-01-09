@@ -1,2 +1,2 @@
 import openSocket from 'socket.io-client'
-export const socket = openSocket('/localhost:8080')
+export const socket = openSocket(process.env.PORT || '/localhost:8080')
