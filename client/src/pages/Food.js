@@ -23,6 +23,7 @@ const Food = props => {
 
     return(
         <div>
+            <h1 style={{textAlign:'center', color:'rgba(0,0,0,.86)'}}>Add Food</h1>
             <SchemaFormV2 schema={[
                 {type:'text',name:'foodName',label:'Food Name'},
                 {type:'text',name:'components',label:'Food Components',hint:'e.g. Nuts, Pepper, Oil, Wheat'},

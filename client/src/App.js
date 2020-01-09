@@ -9,6 +9,8 @@ import { socket } from './serverSocket';
 
 const GlobalStyle = createGlobalStyle`
   html {
+    @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+    font-family: 'Varela Round', sans-serif;
     background: #ecf0f1
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -53,6 +55,10 @@ const App = props => {
         <Switch>
 
           <Route exact path='/'>
+            Home Page...
+          </Route>
+
+          <Route path='/recording'>
             <Recording
               onRecordingSubmit={onSymptomSubmit}
               onRecordingPress={onRecordingPress}

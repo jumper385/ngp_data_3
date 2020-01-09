@@ -12,10 +12,13 @@ const Schema = [
 
 const Context = props => {
     return(
-        <SchemaFormV2 
-            schema={Schema}
-            onReadyForm={props.onSubmit}
-        />
+        <div>
+            <h1 style={{textAlign:'center', color:'rgba(0,0,0,.86)'}}>Add Context</h1>
+            <SchemaFormV2 
+                schema={Schema}
+                onReadyForm={props.onSubmit}
+            />
+        </div>
     )
 }
 

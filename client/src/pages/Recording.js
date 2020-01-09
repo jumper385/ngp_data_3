@@ -96,6 +96,7 @@ const Recording = props => {
 
     return(
         <div>
+            <h1 style={{textAlign:'center', color:'rgba(0,0,0,.86)'}}>Record Bowel Sounds</h1>
             <RecordingButton onClick={changeRecording}>{state.isRecording ? 
                 <i class="material-icons pause">pause</i> :
                 (state.pressCount > 1) ? 

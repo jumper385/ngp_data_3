@@ -3,15 +3,19 @@ import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 const FixedNav = styled.nav`
-    background:pink;
-    height:32pt;
+    background:#f5f5f5
+    height:36pt;
     position:fixed;
-    width:100vw;
-    bottom:0;
-    right:0;
+    width:calc(100% - 24pt);
+    right:12pt;
+    bottom:12pt;
+    border-radius:18pt;
+    overflow:hidden;
     box-sizing:border-box;
     display:grid;
-    grid-template-columns:1fr 1fr 1fr
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    box-shadow:0 9px 16px rgba(0,0,0,.18);
+    z-index:100;
 
     & .navLink {
         color:black;
@@ -20,23 +24,25 @@ const FixedNav = styled.nav`
         text-decoration:none;
         height:100%;
         margin:0;
+        font-size:9pt;
         display:flex;
-        flex-direction:row;
         align-items:center;
         justify-content:center;
     }
 
     & .active {
-        background:red
+        background:#ff4757;
+        color:white;        
     }
 `
 
 export const FixedNavBar = props => {
     return(
         <FixedNav>
-            <NavLink exact className='navLink' to='/'>Home</NavLink>
-            <NavLink className='navLink' to='/addFood'>Food</NavLink>
-            <NavLink className='navLink' to='/addContext'>Context</NavLink>
+            <NavLink exact className='navLink' to='/'><i className="material-icons">home</i></NavLink>
+            <NavLink className='navLink' to='/recording'><i className='material-icons'>mic</i></NavLink>
+            <NavLink className='navLink' to='/addFood'><i className='material-icons'>fastfood</i></NavLink>
+            <NavLink className='navLink' to='/addContext'><i className='material-icons'>chrome_reader_mode</i></NavLink>
         </FixedNav>
     )
 }
