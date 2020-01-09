@@ -13,6 +13,7 @@
     "socket.io": "^2.3.0"
   },
   "scripts":{
-    "start":"node index"
+    "start":"node index",
+    "test":"concurrently \"nodemon\" \"cd client && yarn start\" "
   }
 }
