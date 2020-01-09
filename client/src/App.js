@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
     font-family: 'Varela Round', sans-serif;
-    background: #ecf0f1
+    background: #ecf0f1;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
