@@ -3,7 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import Recording from './pages/Recording';
 import Food from './pages/Food';
 import { FixedNavBar } from './navBar/FixedNavBar';
-import {createGlobalStyle} from 'styled-components'
+import styled, {createGlobalStyle} from 'styled-components'
 import Context from './pages/Context';
 import { socket } from './serverSocket';
 
@@ -16,13 +16,14 @@ const GlobalStyle = createGlobalStyle`
     -ms-user-select: none; 
     user-select: none;
   }
-  body { 
-    &.App {
-      @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
-      font-family: 'Varela Round', sans-serif;
-    }
+  body {
     background: #ecf0f1;
   }
+`
+
+const StyledAppDiv = styled.div`
+  @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+    font-family: 'Varela Round', sans-serif;
 `
 
 const App = props => {
@@ -51,7 +52,7 @@ const App = props => {
 
   return(
     <Router>
-      <div className='App' style={{marginBottom:'64pt'}}>
+      <StyledAppDiv className='App' style={{marginBottom:'64pt'}}>
         <FixedNavBar />
 
         <p>{state.serverTime}</p>
@@ -93,7 +94,7 @@ const App = props => {
 
         </Switch>
         <GlobalStyle />
-      </div>
+      </StyledAppDiv>
     </Router>
   )
 }
