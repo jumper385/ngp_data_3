@@ -5,6 +5,7 @@ const cors = require('cors')
 const shortid = require('shortid')
 const mongoose = require('mongoose')
 const path = require('path')
+const bodyParser = require('body-parser')
 
 const MONGO_URL = 'mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/ngp_3?retryWrites=true&w=majority'
 mongoose.connect(MONGO_URL, {useNewUrlParser:true, useUnifiedTopology:true})
@@ -21,6 +22,8 @@ const PORT = process.env.PORT || 8080
 
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
 
 io.on('connection', socket => {
 
@@ -93,6 +96,23 @@ io.on('connection', socket => {
 
 app.get('/', (req,res) => {
     res.json('realtime NGP Backend')
+})
+
+app.get('/api', async(req,res) => {
+
+    const query = req.body
+    console.log(query)
+
+    let recordings = await Schemas.Recording.find(query)
+    let symptoms = await Schemas.Symptom.find(query)
+    let overalls = await Schemas.Rating.find(query)
+
+    res.json({
+        recordings: [...recordings],
+        symptoms: [...symptoms],
+        overalls: [...overalls]
+    })
+
 })
 
 app.get('*', (req,res) => {
