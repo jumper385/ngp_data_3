@@ -3,6 +3,7 @@ import { TextInput } from '../forms/SchemaFormV2Components/TextInput'
 import { RangeInput } from '../forms/SchemaFormV2Components/RangeInput'
 import { StyledFormSubmit } from './SchemaFormV2Components/StyledFormSubmit'
 import { StyledForm } from './SchemaFormV2Components/StyledForm'
+import { NumberInput } from '../forms/SchemaFormV2Components/NumberInput'
 
 const Input = props => {
 
@@ -35,6 +36,17 @@ const Input = props => {
             />)
         case 'range':
             return(<RangeInput 
+                label={props.label} 
+                type={props.type} 
+                name={props.name} 
+                value={state.payload ? state.payload[props.name] || '' : ''} 
+                onChange={onChange}
+                min={props.min}
+                max={props.max}
+                hint={props.hint}
+            />)
+        case 'number':
+            return(<NumberInput 
                 label={props.label} 
                 type={props.type} 
                 name={props.name} 

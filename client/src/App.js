@@ -9,7 +9,6 @@ import { socket } from './serverSocket';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -18,7 +17,10 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
   }
   body { 
-    font-family: 'Varela Round', sans-serif;
+    & .App {
+      @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+      font-family: 'Varela Round', sans-serif;
+    }
     background: #ecf0f1;
   }
 `

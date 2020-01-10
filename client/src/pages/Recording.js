@@ -113,7 +113,7 @@ const Recording = props => {
                 <i className="material-icons play">play_arrow</i> : 
                 <i className="material-icons record">fiber_manual_record</i>}
             </RecordingButton> :
-            <SchemaFormV2 onReadyForm={hardwareRecordingNumber} schema={[{type:'text', label:'Hardware Recording Number', name:'hardwareRecordingNumber'}]} /> 
+            <SchemaFormV2 onReadyForm={hardwareRecordingNumber} schema={[{type:'number', label:'Hardware Recording Number', name:'hardwareRecordingNumber'}]} /> 
             }
 
             <br />
