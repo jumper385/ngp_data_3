@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
 
 const StyledAppDiv = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
-    font-family: 'Varela Round', sans-serif;
+  font-family: 'Arial', sans-serif;
 `
 
 const App = props => {
