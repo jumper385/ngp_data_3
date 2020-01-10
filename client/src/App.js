@@ -17,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
   }
   body { 
-    & .App {
+    &.App {
       @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
       font-family: 'Varela Round', sans-serif;
     }
