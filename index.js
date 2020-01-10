@@ -42,7 +42,8 @@ io.on('connection', socket => {
 
             recording = {
                 recordingId:recordingId,
-                startTime:data.timestamp
+                startTime:data.timestamp,
+                hardwareRecordingNumber:data.hardwareRecordingNumber
             }
             
             const newRecording = new Schemas.Recording({...recording})
