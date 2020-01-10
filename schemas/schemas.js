@@ -1,46 +1,57 @@
 const mongoose = require('mongoose')
 
-const Recording = new mongoose.Schema({
+const GlobalParameters = {
+    username: String,
+    notes: String,
+}
+
+const GlobalRecordingParameters = {
+    hardwareRecordingNumber: Number,
     recordingId: String,
+}
+
+const Recording = new mongoose.Schema({
+    ...GlobalParameters,
+    ...GlobalRecordingParameters,
     startTime: Date,
     endTime: Date,
     hardwareRecordingNumber:Number,
 })
 
 const Symptom = new mongoose.Schema({
+    ...GlobalParameters,
+    ...GlobalRecordingParameters,
     symptom: String, 
     severity: Number,
     location: String,
-    timestamp: {type: Date, default: new Date()}, 
-    notes: String, 
-    recordingId:String,
+    timestamp: {type: Date, default: new Date()},
 })
 
 const Rating = new mongoose.Schema({
+    ...GlobalParameters,
+    ...GlobalRecordingParameters,
     overall:Number,
     abdPain:Number,
     bloating:Number,
     wind:Number,
-    notes:String,
     timestamp: {type:Date, default: new Date()},
-    recordingId:String,
 })
 
 const Food = new mongoose.Schema({
+    ...GlobalParameters,
     foodName: String,
     components: String,
     timestamp: { type: Date, default: new Date()},
 })
 
 const Context = new mongoose.Schema({
+    ...GlobalParameters,
     poop: Number,
     poopSize: Number,
     stress: Number,
     sleep: Number,
-    energy: Number, 
-    notes: String,
+    energy: Number,
     timestamp: { type: Date, default: new Date()},
-    recordingId:String,
 })
 
 module.exports = {
