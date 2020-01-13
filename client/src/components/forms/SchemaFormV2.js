@@ -4,6 +4,7 @@ import { RangeInput } from '../forms/SchemaFormV2Components/RangeInput'
 import { StyledFormSubmit } from './SchemaFormV2Components/StyledFormSubmit'
 import { StyledForm } from './SchemaFormV2Components/StyledForm'
 import { NumberInput } from '../forms/SchemaFormV2Components/NumberInput'
+import { DatetimeInput } from './SchemaFormV2Components/DateTimeInput'
 
 const Input = props => {
 
@@ -54,6 +55,15 @@ const Input = props => {
                 onChange={onChange}
                 min={props.min}
                 max={props.max}
+                hint={props.hint}
+            />)
+        case 'datetime-local':
+            return(<DatetimeInput 
+                label={props.label} 
+                type={props.type} 
+                name={props.name} 
+                value={state.payload ? state.payload[props.name] || '' : ''} 
+                onChange={onChange}
                 hint={props.hint}
             />)
         default:

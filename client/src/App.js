@@ -48,11 +48,11 @@ const App = props => {
   let [state, setState] = useState({})
 
   const onFoodSubmit = foods => {
-    socket.emit('client/submit/food', {...foods, timestamp:new Date()})
+    socket.emit('client/submit/food', {...foods, timestamp:foods.timestamp})
   }
 
   const onContextSubmit = context => {
-    socket.emit('client/submit/context', {...context, timestamp:new Date()})
+    socket.emit('client/submit/context', {...context, timestamp: context.timestamp || new Date()})
   }
 
   return(

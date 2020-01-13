@@ -78,10 +78,10 @@ io.on('connection', socket => {
         makeNewRecording = true
     })
 
-    socket.on('client/submit/food', async ratings => {
-        let foodData = {...ratings, timestamp: new Date()}
+    socket.on('client/submit/food', async food => {
+        let foodData = {...food, timestamp: food.timestamp}
+        console.log(foodData, food)
         const newFood = await Schemas.Food.create({...foodData})
-        console.log(newFood)
     })
 
     socket.on('client/submit/context', async context => {
