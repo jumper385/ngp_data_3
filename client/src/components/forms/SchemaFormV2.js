@@ -57,7 +57,7 @@ const Input = props => {
                 max={props.max}
                 hint={props.hint}
             />)
-        case 'datetime-local':
+        case 'time':
             return(<DatetimeInput 
                 label={props.label} 
                 type={props.type} 

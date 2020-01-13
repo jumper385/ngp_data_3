@@ -26,7 +26,7 @@ export const DatetimeInput = props => {
             <p className='inputLabel'>{props.label}</p>
             <StyledDateTimeInput 
                 type='datetime-local' 
-                value={props ? props.value || '' : ''}
+                value={props ? props.value.substr(0,16) || '' : ''}
                 onChange={props.onChange}
                 name={props.name}
                 placeholder={props.name}

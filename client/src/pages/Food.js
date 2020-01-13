@@ -26,7 +26,7 @@ const Food = props => {
             <h1 style={{textAlign:'center', color:'rgba(0,0,0,.86)'}}>Add Food</h1>
             <SchemaFormV2 schema={[
                 {type:'text',name:'foodName',label:'Food Name'},
-                {type:'datetime-local',name:'timestamp',label:'Consumption Time',hint:'What time did you have it? - Click the white part... there\'s a bug in iOS i cant fix...'},
+                {type:'time',name:'timestamp',label:'Consumption Time',hint:'What time did you have it? - Click the white part... there\'s a bug in iOS i cant fix...'},
                 {type:'text',name:'components',label:'Food Components',hint:'e.g. Nuts, Pepper, Oil, Wheat'},
             ]} onReadyForm={onSubmit}/>
         </div>
