@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const socket = require('socket.io')
 const http = require('http')
@@ -7,7 +8,7 @@ const mongoose = require('mongoose')
 const path = require('path')
 const bodyParser = require('body-parser')
 
-const MONGO_URL = 'mongodb+srv://nova:st18chenh@cluster0-ztrfz.azure.mongodb.net/ngp_3?retryWrites=true&w=majority'
+const MONGO_URL = process.env.MONGO_URI
 mongoose.connect(MONGO_URL, {useNewUrlParser:true, useUnifiedTopology:true})
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error'));

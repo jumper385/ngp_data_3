@@ -6,6 +6,8 @@ import { FixedNavBar } from './navBar/FixedNavBar';
 import styled, {createGlobalStyle} from 'styled-components'
 import Context from './pages/Context';
 import { socket } from './serverSocket';
+import { connect } from 'react-redux'
+import Home from './pages/Home';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -60,20 +62,7 @@ const App = props => {
         <Switch>
 
           <Route exact path='/'>
-            <div>
-
-              <div>
-                <h1>Instructions on how to use this!!!</h1>
-                <h2>Navigation Buttons</h2>
-                <ul>
-                  <li><i className='material-icons'>home</i>: Home Page</li>
-                  <li><i className='material-icons'>mic</i>: Add a Recording</li>
-                  <li><i className='material-icons'>fastfood</i>: Add Food Log</li>
-                  <li><i className='material-icons'>chrome_reader_mode</i>: Add Context (e.g poop, energy and sleep)</li>
-                </ul>
-              </div>
-
-            </div>
+            <Home />
           </Route>
 
           <Route path='/recording'>
@@ -97,6 +86,11 @@ const App = props => {
       </StyledAppDiv>
     </Router>
   )
+
 }
 
-export default App
+const mapStateToProps = state => ({
+  ...state
+})
+
+export default connect(mapStateToProps)(App)
