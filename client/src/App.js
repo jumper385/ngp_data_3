@@ -26,6 +26,21 @@ const GlobalStyle = createGlobalStyle`
 const StyledAppDiv = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
   font-family: 'Arial', sans-serif;
+  margin-top:32pt;
+`
+
+const RecordingStatusBar = styled.div`
+  background:${props => props.recording ? '#ffa502' : null}
+  color:white;
+  position:fixed;
+  width:100vw;
+  box-sizing:border-box;
+  top:0;
+  left:0;
+  & p {
+    margin:3pt 0;
+    text-align:center;
+  }
 `
 
 const App = props => {
@@ -43,27 +58,19 @@ const App = props => {
   return(
     <Router>
       <StyledAppDiv className='App' style={{marginBottom:'64pt'}}>
-        <FixedNavBar />
+        
+        <RecordingStatusBar recording={props.currentRecording.isReadyToRecord}>
+          <p>{props.currentRecording.isReadyToRecord ? `You're recording...` : null}</p>
+        </RecordingStatusBar>
 
-        <p>{state.serverTime}</p>
+        <FixedNavBar />
 
         <Switch>
 
-          <Route exact path='/'>
-            <Home />
-          </Route>
-
-          <Route path='/recording'>
-            <Recording/>
-          </Route>
-
-          <Route path='/addFood'>
-            <Food onSubmit={onFoodSubmit}/>
-          </Route>
-
-          <Route path='/addContext'>
-            <Context onSubmit={onContextSubmit}/>
-          </Route>
+          <Route exact path='/'><Home /></Route>
+          <Route path='/recording'><Recording/></Route>
+          <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
+          <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
 
         </Switch>
         <GlobalStyle />
