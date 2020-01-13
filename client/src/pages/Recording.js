@@ -79,7 +79,7 @@ const Recording = props => {
                 null
             }</div>
             <br />
-            <button onClick={props.RESET}>RESET STATE - DEBUGGING</button>
+            {/* <button onClick={props.RESET}>RESET STATE - DEBUGGING</button> */}
         </div>
     )
 }

@@ -32,18 +32,6 @@ const App = props => {
 
   let [state, setState] = useState({})
 
-  const onSymptomSubmit = symptom => {
-    socket.emit('client/submit/symptom', symptom)
-  }
-
-  const onRecordingPress = e => {
-    socket.emit('client/recording/state', {...e, timestamp:new Date()})
-  }
-
-  const onRatingSubmit = ratings => {
-    socket.emit('client/submit/rating', {...ratings, timestamp:new Date()})
-  }
-
   const onFoodSubmit = foods => {
     socket.emit('client/submit/food', {...foods, timestamp:new Date()})
   }
@@ -66,11 +54,7 @@ const App = props => {
           </Route>
 
           <Route path='/recording'>
-            <Recording
-              onRecordingSubmit={onSymptomSubmit}
-              onRecordingPress={onRecordingPress}
-              onRatingSubmit={onRatingSubmit}
-            />
+            <Recording/>
           </Route>
 
           <Route path='/addFood'>
