@@ -47,9 +47,9 @@ const Recording = props => {
                 }</RecordingButton> :
                 <SchemaFormV2 onReadyForm={props.ADD_HARDWARE_RECORDING_NUMBER} schema={RecordingNumberSchema}/>
             }
-            {props.symptomArray ? 
+            <p>{props.symptomArray ? 
             `"${props.symptomArray[props.symptomArray.length-1].symptom}" was added at ${new Date()}` : 
-            'no symptoms yet...'}
+            props.isRecording ? 'no symptoms yet...' : null}</p>
             <div>{props.isRecording ? 
                 <div>
                     <p>Simple Symptoms</p>
@@ -70,11 +70,15 @@ const Recording = props => {
                 </div> : 
                 props.isReadyToRecord ? 
                 (props.recordingClickCounter > 1) ? 
-                <SchemaFormV2 onReadyForm={e => props.ADD_RATING} schema={RatingSchema}/> :
+                <SchemaFormV2 onReadyForm={e => {
+                    props.ADD_RATING(e)
+                    props.RESET()
+                }} schema={RatingSchema}/> :
                 'not recording'
                 :
                 null
             }</div>
+            <br />
             <button onClick={props.RESET}>RESET STATE - DEBUGGING</button>
         </div>
     )

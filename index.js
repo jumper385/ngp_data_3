@@ -47,7 +47,7 @@ io.on('connection', socket => {
                 hardwareRecordingNumber:data.hardwareRecordingNumber
             }
             
-            const newRecording = new Schemas.Recording({...recording})
+            const newRecording = new Schemas.Recording({...recording, startTime:new Date()})
 
             const saveRecording = await newRecording.save()
             console.log(saveRecording)
