@@ -15,6 +15,8 @@ const Home = props => {
             </ul>
             </div>
 
+            It's also OKAY to switch between different tabs - even out of the browser!!! State management has you covered 😁😁😁
+
         </div>
     )
 }
