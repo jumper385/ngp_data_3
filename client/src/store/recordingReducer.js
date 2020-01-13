@@ -74,6 +74,8 @@ export const currentRecording = (state = defaultState, action) => {
 
             socket.emit('client/submit/rating', {...action.payload,hardwareRecordingNumber:state.hardwareRecordingNumber})
 
+            socket.emit('client/submit/rating', {...action.payload,hardwareRecordingNumber:state.hardwareRecordingNumber})
+
             return state
 
         default:

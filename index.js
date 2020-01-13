@@ -43,7 +43,7 @@ io.on('connection', socket => {
 
             recording = {
                 recordingId:recordingId,
-                startTime:data.timestamp,
+                startTime:new Date(),
                 hardwareRecordingNumber:data.hardwareRecordingNumber
             }
             
@@ -56,7 +56,7 @@ io.on('connection', socket => {
     })
 
     socket.on('client/submit/symptom', async data => {
-        const symptomTimestamped = {...data, recordingId:recordingId}
+        const symptomTimestamped = {...data, timestamp: new Date(), recordingId:recordingId}
 
         const newSymptom = new Schemas.Symptom({
             ...symptomTimestamped
@@ -67,10 +67,10 @@ io.on('connection', socket => {
     })
 
     socket.on('client/submit/rating', async data => {
-        recording = {...recording, endTime:data.timestamp}
+        recording = {...recording, endTime:new Date()}
         let rating = {...data, recordingId:recordingId}
 
-        const newRating = await Schemas.Rating({...rating, recordingId:recordingId}).save()
+        const newRating = await Schemas.Rating({...rating, recordingId:recordingId, timestamp: new Date()}).save()
         const updatedEnding = await Schemas.Recording.findOneAndUpdate({recordingId:recordingId}, {...recording})
 
         recordingId = 
@@ -79,13 +79,13 @@ io.on('connection', socket => {
     })
 
     socket.on('client/submit/food', async ratings => {
-        let foodData = {...ratings}
+        let foodData = {...ratings, timestamp: new Date()}
         const newFood = await Schemas.Food.create({...foodData})
         console.log(newFood)
     })
 
     socket.on('client/submit/context', async context => {
-        let contextData = {...context}
+        let contextData = {...context, timestamp: new Date()}
         const newContext = await Schemas.Context.create({...contextData})
         console.log(newContext)
     })
