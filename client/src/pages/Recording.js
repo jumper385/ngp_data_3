@@ -41,23 +41,38 @@ const Recording = props => {
     console.log(props)
     return (
         <div>
-            Recording Page
             {props.isReadyToRecord ? 
                 <RecordingButton onClick={props.CHANGE_RECORDING_STATE}>{
                     props.isRecording ? 'pause' : 'play'
                 }</RecordingButton> :
                 <SchemaFormV2 onReadyForm={props.ADD_HARDWARE_RECORDING_NUMBER} schema={RecordingNumberSchema}/>
             }
+            {props.symptomArray ? 
+            `"${props.symptomArray[props.symptomArray.length-1].symptom}" was added at ${new Date()}` : 
+            'no symptoms yet...'}
             <div>{props.isRecording ? 
                 <div>
                     <p>Simple Symptoms</p>
-                    <button onClick={e => props.ADD_SYMPTOM({symptom:'burp'})}>burp</button>
-                    <button onClick={e => props.ADD_SYMPTOM({symptom:'fart'})}>fart</button>
-                    <button onClick={e => props.ADD_SYMPTOM({symptom:'gurgle'})}>gurgle</button>
-                    <button onClick={e => props.ADD_SYMPTOM({symptom:'urge to poo'})}>urge to poo</button>
+                    <button onClick={e => props.ADD_SHORTCUT_SYMPTOM({symptom:'burp'})}>burp</button>
+                    <button onClick={e => props.ADD_SHORTCUT_SYMPTOM({symptom:'fart'})}>fart</button>
+                    <button onClick={e => props.ADD_SHORTCUT_SYMPTOM({symptom:'gurgle'})}>gurgle</button>
+                    <button onClick={e => props.ADD_SHORTCUT_SYMPTOM({symptom:'urge to poo'})}>urge to poo</button>
+                
+                    <p>Complex Symptoms</p>
+                    <button onClick={e => props.EDIT_SYMPTOM({symptom:'pain'})}>pain</button>
+                    <button onClick={e => props.EDIT_SYMPTOM({symptom:'bloating'})}>bloating</button>
+                    <button onClick={e => props.EDIT_SYMPTOM({symptom:'constipation'})}>constipation</button>
+                    <button onClick={e => props.EDIT_SYMPTOM({symptom:'custom'})}>custom</button>
+                    {(props.currSymptom && props.isComplex) ? 
+                    <SchemaFormV2 onReadyForm={props.ADD_SYMPTOM} schema={SymptomSchema[props.currSymptom.symptom]}/> : 
+                    null
+                    }
                 </div> : 
                 props.isReadyToRecord ? 
-                'not recording' :
+                (props.recordingClickCounter > 1) ? 
+                <SchemaFormV2 onReadyForm={e => props.ADD_RATING} schema={RatingSchema}/> :
+                'not recording'
+                :
                 null
             }</div>
             <button onClick={props.RESET}>RESET STATE - DEBUGGING</button>
@@ -73,7 +88,10 @@ const mapDispatchToProps = dispatch => ({
     RESET: e => dispatch({type:'RESET'}),
     ADD_HARDWARE_RECORDING_NUMBER: e => dispatch({type:'ADD_HARDWARE_RECORDING_NUMBER', payload:e}),
     CHANGE_RECORDING_STATE: e => dispatch({type:'CHANGE_RECORDING_STATE'}),
-    ADD_SYMPTOM: e => dispatch({type:'ADD_SYMPTOM', payload:e})
+    ADD_SHORTCUT_SYMPTOM: e => dispatch({type:'ADD_SHORTCUT_SYMPTOM', payload:e}),
+    EDIT_SYMPTOM: e => dispatch({type:'EDIT_SYMPTOM', payload:e}),
+    ADD_SYMPTOM: e => dispatch({type:'ADD_SYMPTOM', payload:e }),
+    ADD_RATING: e => dispatch({type:'ADD_RATING', payload:e})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recording)
