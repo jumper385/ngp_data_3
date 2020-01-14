@@ -133,6 +133,7 @@ app.get('/api', async(req,res) => {
 
 app.delete('/api/recordings', async(req,res) => {
     let deleteReturns = null
+    console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
         deleteReturns = await Schemas.Recording.find(req.body.query).deleteMany()
     }
@@ -141,6 +142,7 @@ app.delete('/api/recordings', async(req,res) => {
 
 app.delete('/api/symptoms', async(req,res) => {
     let deleteReturns = null
+    console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
         deleteReturns = await Schemas.Symptom.find(req.body.query).deleteMany()
     }
@@ -149,6 +151,7 @@ app.delete('/api/symptoms', async(req,res) => {
 
 app.delete('/api/overalls', async(req,res) => {
     let deleteReturns = null
+    console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
         deleteReturns = await Schemas.Rating.find(req.body.query).deleteMany()
     }
@@ -157,6 +160,7 @@ app.delete('/api/overalls', async(req,res) => {
 
 app.delete('/api/foods', async(req,res) => {
     let deleteReturns = null
+    console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
         deleteReturns = await Schemas.Food.find(req.body.query).deleteMany()
     }
@@ -165,6 +169,7 @@ app.delete('/api/foods', async(req,res) => {
 
 app.delete('/api/contexts', async(req,res) => {
     let deleteReturns = null
+    console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
         deleteReturns = await Schemas.Context.find(req.body.query).deleteMany()
     }
