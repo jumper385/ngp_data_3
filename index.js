@@ -108,13 +108,57 @@ app.get('/api', async(req,res) => {
     let recordings = await Schemas.Recording.find(query)
     let symptoms = await Schemas.Symptom.find(query)
     let overalls = await Schemas.Rating.find(query)
+    let foods = await Schemas.Food.find(query)
+    let contexts = await Schemas.Context.find(query)
 
     res.json({
         recordings: [...recordings],
         symptoms: [...symptoms],
-        overalls: [...overalls]
+        overalls: [...overalls],
+        foods: [...foods],
+        contexts: [...contexts]
     })
 
+})
+
+app.delete('/api/recordings', async(req,res) => {
+    let deleteReturns = null
+    if(req.body.password == process.env.MASTER_KEY){
+        deleteReturns = await Schemas.Recording.find(req.body.query).deleteMany()
+    }
+    res.json(deleteReturns || 'nothing...')
+})
+
+app.delete('/api/symptoms', async(req,res) => {
+    let deleteReturns = null
+    if(req.body.password == process.env.MASTER_KEY){
+        deleteReturns = await Schemas.Symptom.find(req.body.query).deleteMany()
+    }
+    res.json(deleteReturns || 'nothing...')
+})
+
+app.delete('/api/overalls', async(req,res) => {
+    let deleteReturns = null
+    if(req.body.password == process.env.MASTER_KEY){
+        deleteReturns = await Schemas.Rating.find(req.body.query).deleteMany()
+    }
+    res.json(deleteReturns || 'nothing...')
+})
+
+app.delete('/api/foods', async(req,res) => {
+    let deleteReturns = null
+    if(req.body.password == process.env.MASTER_KEY){
+        deleteReturns = await Schemas.Food.find(req.body.query).deleteMany()
+    }
+    res.json(deleteReturns || 'nothing...')
+})
+
+app.delete('/api/contexts', async(req,res) => {
+    let deleteReturns = null
+    if(req.body.password == process.env.MASTER_KEY){
+        deleteReturns = await Schemas.Context.find(req.body.query).deleteMany()
+    }
+    res.json(deleteReturns || 'nothing...')
 })
 
 app.get('*', (req,res) => {
