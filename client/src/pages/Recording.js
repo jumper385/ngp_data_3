@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { SchemaFormV2 } from '../components/forms/SchemaFormV2'
 import { RecordingButton } from '../components/buttons/RecordingButtonV2'
 import { connect } from 'react-redux'
+import Snackbar from '../components/notifications/snackbar'
 
 const RatingSchema = [
     {type:'range', label:'Overall', name:'overall', min:0, max:10},
@@ -41,6 +42,7 @@ const Recording = props => {
     console.log(props)
     return (
         <div>
+            <Snackbar />
             {props.isReadyToRecord ? 
                 <RecordingButton onClick={props.CHANGE_RECORDING_STATE}>{
                     props.isRecording ? 'pause' : 'play'

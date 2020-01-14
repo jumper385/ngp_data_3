@@ -27,6 +27,7 @@ const StyledAppDiv = styled.div`
   @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
   font-family: 'Arial', sans-serif;
   margin-top:32pt;
+  margin-bottom:90pt;
 `
 
 const RecordingStatusBar = styled.div`
@@ -57,8 +58,8 @@ const App = props => {
 
   return(
     <Router>
-      <StyledAppDiv className='App' style={{marginBottom:'64pt'}}>
-        
+      <StyledAppDiv className='App'>
+
         <RecordingStatusBar recording={props.currentRecording.isReadyToRecord}>
           <p>{props.currentRecording.isReadyToRecord ? `You're recording...` : null}</p>
         </RecordingStatusBar>

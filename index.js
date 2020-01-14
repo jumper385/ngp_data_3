@@ -32,10 +32,9 @@ io.on('connection', socket => {
     let recording
     let makeNewRecording = true
 
-    console.log(socket.id, 'new user connected')
-
-    setInterval(() => socket.emit('time', new Date()), 100)
-
+    io.emit('master/meta/connect', `socket ${socket.id} connected`)
+    io.to(`${socket.id}`).emit('res@client/meta/connect')
+    
     socket.on('client/recording/state', async data => {
         if(makeNewRecording){
             isRecording = data
@@ -52,6 +51,8 @@ io.on('connection', socket => {
             const saveRecording = await newRecording.save()
             console.log(saveRecording)
         }
+        io.to(`${socket.id}`).emit('res@client/recording/state', data)
+        io.emit('master/recording/state', data)
         makeNewRecording = false
     })
 
@@ -63,7 +64,8 @@ io.on('connection', socket => {
         })
 
         const saveRecording = await newSymptom.save()
-
+        io.to(`${socket.id}`).emit('res@client/submit/symptom', saveRecording)
+        io.emit('master/submit/symptom', saveRecording)
     })
 
     socket.on('client/submit/rating', async data => {
@@ -73,25 +75,33 @@ io.on('connection', socket => {
         const newRating = await Schemas.Rating({...rating, recordingId:recordingId, timestamp: new Date()}).save()
         const updatedEnding = await Schemas.Recording.findOneAndUpdate({recordingId:recordingId}, {...recording})
 
-        recordingId = 
+        recordingId = null
         console.log(socket.id, recording, rating)
         makeNewRecording = true
+
+        io.to(`${socket.id}`).emit('res@client/submit/rating', {rating: newRating, updatedRecording: updatedEnding})
+        io.emit('master/submit/rating', {rating: newRating, updatedRecording: updatedEnding})
     })
 
     socket.on('client/submit/food', async food => {
         let foodData = {...food, timestamp: food.timestamp}
         console.log(foodData, food)
         const newFood = await Schemas.Food.create({...foodData})
+
+        io.to(`${socket.id}`).emit('res@client/submit/food', newFood)
+        io.emit('master/submit/food', newFood)
     })
 
     socket.on('client/submit/context', async context => {
         let contextData = {...context, timestamp: new Date()}
         const newContext = await Schemas.Context.create({...contextData})
-        console.log(newContext)
+
+        io.to(`${socket.id}`).emit('res@client/submit/context', newContext)
+        io.emit('master/submit/context', newContext)
     })
 
     socket.on('disconnect', () => {
-        console.log(socket.id, 'user disconnected')
+        io.emit('master/meta/disconnect', `socket ${socket.id} disconnected`)
     })
 
 })
