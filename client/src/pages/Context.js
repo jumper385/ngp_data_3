@@ -3,10 +3,10 @@ import { SchemaFormV2 } from '../components/forms/SchemaFormV2'
 
 const Schema = [
     {type:'range', label:'Bristol Poop Rating', name:'poop', min:1, max:7},
-    {type:'range', label:'Poop Size', name:'poopSize', min:0, max:10},
+    {type:'range', label:'Poop Size', name:'poopSize', min:0, max:10, hint: '0 = small, 5 = medium & 10 = large'},
     {type:'range', label:'Stress Level', name:'stress', min:0, max:10},
-    {type:'range', label:'Sleep (hrs)', name:'sleep', min:0, max:24},
-    {type:'range', label:'Energy Rating', name:'energy', min:0, max:10},
+    {type:'range', label:'Sleep (hrs)', name:'sleep', min:0, max:24, hint:'number of hours slept within the last 24 hours'},
+    {type:'range', label:'Energy Rating', name:'energy', min:0, max:10, hint:'0 = low, 5 = medium & 10 = high'},
     {type:'text', label:'Notes', name:'notes'}
 ]
 

@@ -100,6 +100,14 @@ io.on('connection', socket => {
         io.emit('master/submit/context', newContext)
     })
 
+    socket.on('client/grab/symptoms', async () => {
+        console.log('new log...')
+        timestamp = new Date(Date.now()-36*60*60*1000)
+        let symptoms = await Schemas.Symptom.find({timestamp:{$gte:timestamp}})
+        console.log(symptoms)
+        io.emit('res@client/grab/symptoms', symptoms)
+    })
+
     socket.on('disconnect', () => {
         io.emit('master/meta/disconnect', `socket ${socket.id} disconnected`)
     })
