@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import Recording from './pages/Recording';
 import Food from './pages/Food';
@@ -8,7 +8,6 @@ import Context from './pages/Context';
 import { socket } from './serverSocket';
 import { connect } from 'react-redux'
 import Home from './pages/Home';
-import { TestForm } from './pages/testPage';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -47,8 +46,6 @@ const RecordingStatusBar = styled.div`
 
 const App = props => {
 
-  let [state, setState] = useState({})
-
   const onFoodSubmit = foods => {
     socket.emit('client/submit/food', {...foods, timestamp:foods.timestamp})
   }
@@ -73,7 +70,6 @@ const App = props => {
           <Route path='/recording'><Recording/></Route>
           <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
           <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
-          <Route path='/test'><TestForm /></Route>
 
         </Switch>
         <GlobalStyle />

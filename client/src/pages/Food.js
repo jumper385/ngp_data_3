@@ -12,7 +12,7 @@ const Food = props => {
             setState({readyToSubmit:false})
         }
 
-    })
+    }, [props, state.readyToSubmit, state.food])
 
     const onSubmit = e => {
         if(e){

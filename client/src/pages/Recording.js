@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import { SchemaFormV2 } from '../components/forms/SchemaFormV2'
 import { RecordingButton } from '../components/buttons/RecordingButtonV2'
 import { connect } from 'react-redux'
@@ -43,7 +43,8 @@ const Recording = props => {
     console.log(props)
 
     socket.on('res@client/recording/state', data => {
-        props.ADD_RECORDING_ID(data.id)
+        console.log(data)
+        props.ADD_RECORDING_ID(data.recordingId)
     })
 
     return (

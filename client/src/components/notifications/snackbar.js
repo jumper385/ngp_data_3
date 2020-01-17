@@ -1,6 +1,5 @@
-import React, {Component, useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { socket } from '../../serverSocket'
 import { connect } from 'react-redux'
 
 const SnackbarContainer = styled.div`
@@ -13,8 +12,6 @@ const SnackbarContainer = styled.div`
 
 const Snackbar = props => {
 
-    console.log(props.currentRecording.symptomArray)
-
     let data = (props.currentRecording && props.currentRecording.symptomArray) ? props.currentRecording.symptomArray : null
 
     return(
@@ -23,6 +20,7 @@ const Snackbar = props => {
                 (data == null) ? 
                 null : data.slice((data.length > 3) ? -3 : -data.length).map((object, index) => {
                 if(object != null) {return <p key={index}>({data.length-index}) - {object.symptom}</p>}
+                else return null
                 })
             }
         </SnackbarContainer>

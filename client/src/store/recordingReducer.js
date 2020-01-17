@@ -9,37 +9,55 @@ export const currentRecording = (state = defaultState, action) => {
             return state
 
         case 'ADD_HARDWARE_RECORDING_NUMBER':
+
             state = {
-                ...state, hardwareRecordingNumber:action.payload.hardwareRecordingNumber,
+                ...state, 
+                hardwareRecordingNumber:action.payload.hardwareRecordingNumber,
                 isReadyToRecord:true
             }
             return state
 
         case 'CHANGE_RECORDING_STATE':
             let recordingState = state.isRecording ? false : true
+
             state = {
                 ...state, isRecording:recordingState,
                 recordingClickCounter: state.recordingClickCounter+1 || 1,
             }
+
             socket.emit('client/recording/state', {isRecording: state.isRecording, hardwareRecordingNumber:state.hardwareRecordingNumber})
 
             return state
 
         case 'ADD_SHORTCUT_SYMPTOM':
+
+            let uploadPayload = {
+                ...action.payload, 
+                timestamp:new Date(), 
+                recordingId: state.recordingId || null,
+                hardwareRecordingNumber:state.hardwareRecordingNumber
+            }
+
             state = {...state, 
                 symptomArray: state.symptomArray ?
-                [...state.symptomArray, {...action.payload}] :
-                [{...action.payload}],
+                [...state.symptomArray, {...uploadPayload}] :
+                [{...uploadPayload}],
                 isComplex:false
             }
-            socket.emit('client/submit/symptom', {...action.payload, hardwareRecordingNumber:state.hardwareRecordingNumber})
+
+            socket.emit('client/submit/symptom', uploadPayload)
             return state
 
         case 'EDIT_SYMPTOM':
+
             let newSymptom = {
                 ...state.currSymptom || null,
                 ...action.payload,
+                recordingId: state.recordingId || null,
+                hardwareRecordingNumber:state.hardwareRecordingNumber,
+                timestamp:new Date()
             }
+
             state = { 
                 ...state, 
                 currSymptom:newSymptom,
@@ -49,10 +67,18 @@ export const currentRecording = (state = defaultState, action) => {
             
         case 'ADD_SYMPTOM':
 
+            let symptomUpload = {
+                ...state.currSymptom, 
+                ...action.payload, 
+                recordingId: state.recordingId || null,
+                hardwareRecordingNumber:state.hardwareRecordingNumber,
+                timestamp:new Date()
+            }
+
             state = {...state,
                 symptomArray: state.symptomArray ?
-                [...state.symptomArray, {...state.currSymptom, ...action.payload} || null] :
-                [{...state.currSymptom, ...action.payload} || null],
+                [...state.symptomArray, symptomUpload || null] :
+                [symptomUpload || null],
                 isComplex:false
             }
 
@@ -91,6 +117,8 @@ export const currentRecording = (state = defaultState, action) => {
                 ...state, 
                 recordingId:action.payload
             }
+
+            return state
 
         default:
             return state

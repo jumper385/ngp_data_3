@@ -28,7 +28,6 @@ app.use(bodyParser.urlencoded({extended:true}))
 
 io.on('connection', socket => {
 
-    let recordingId
     let recording
     let makeNewRecording = true
 
@@ -36,46 +35,45 @@ io.on('connection', socket => {
     io.to(`${socket.id}`).emit('res@client/meta/connect')
     
     socket.on('client/recording/state', async data => {
-        if(makeNewRecording){
-            isRecording = data
-            recordingId = shortid.generate()
+
+        if((data.recordingId == null) && data.isRecording){
+
+            let newId = shortid.generate()
 
             recording = {
-                recordingId:recordingId,
+                recordingId:newId,
                 startTime:new Date(),
                 hardwareRecordingNumber:data.hardwareRecordingNumber
             }
-            
-            const newRecording = new Schemas.Recording({...recording, startTime:new Date()})
 
-            const saveRecording = await newRecording.save()
-            console.log(saveRecording)
+            const newRecording = await Schemas.Recording.create({...recording})
+
+            io.to(`${socket.id}`).emit('res@client/recording/state', {recordingId:newId, ...newRecording})
         }
-        io.to(`${socket.id}`).emit('res@client/recording/state', {id:recordingId})
-        io.emit('master/recording/state', data)
-        makeNewRecording = false
+        
     })
 
     socket.on('client/submit/symptom', async data => {
-        const symptomTimestamped = {...data, timestamp: new Date(), recordingId:recordingId}
 
         const newSymptom = new Schemas.Symptom({
-            ...symptomTimestamped
+            ...data
         })
 
         const saveRecording = await newSymptom.save()
         io.to(`${socket.id}`).emit('res@client/submit/symptom', saveRecording)
         io.emit('master/submit/symptom', saveRecording)
+
     })
 
     socket.on('client/submit/rating', async data => {
+        let { recordingId } = data
+        console.log(recordingId)
         recording = {...recording, endTime:new Date()}
-        let rating = {...data, recordingId:recordingId}
+        let rating = {...data}
 
-        const newRating = await Schemas.Rating({...rating, recordingId:recordingId, timestamp: new Date()}).save()
+        const newRating = await Schemas.Rating({...rating}).save()
         const updatedEnding = await Schemas.Recording.findOneAndUpdate({recordingId:recordingId}, {...recording})
 
-        recordingId = null
         console.log(socket.id, recording, rating)
         makeNewRecording = true
 

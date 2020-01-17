@@ -11,14 +11,14 @@ const Input = props => {
     let [state, setState] = useState({})
 
     useEffect(() => {
-        if(props.resetForm == true){
+        if(props.resetForm === true){
             setState({...state, payload:{}, readyToReset:false})
         }
         if(state.readyToChange && props.onChange){
             props.onChange(state.payload)
             setState({...state, readyToChange:false})
         }
-    })
+    }, [state, props])
 
     const onChange = e => {
         const payload = {[e.target.name]:e.target.value}
@@ -97,7 +97,7 @@ export const SchemaFormV2 = props => {
         if(state.readyToReset === true){
             setState({...state, readyToReset:false})
         }
-    })
+    }, [state, props])
 
     const onSubmit = e => {
         e.preventDefault()
