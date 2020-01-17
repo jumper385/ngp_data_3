@@ -49,14 +49,19 @@ export const currentRecording = (state = defaultState, action) => {
             
         case 'ADD_SYMPTOM':
 
-            state = {...state, 
+            state = {...state,
                 symptomArray: state.symptomArray ?
                 [...state.symptomArray, {...state.currSymptom, ...action.payload} || null] :
                 [{...state.currSymptom, ...action.payload} || null],
                 isComplex:false
             }
 
-            socket.emit('client/submit/symptom', {...state.currSymptom, ...action.payload, hardwareRecordingNumber:state.hardwareRecordingNumber})
+            socket.emit('client/submit/symptom', {
+                ...state.currSymptom, 
+                ...action.payload, 
+                hardwareRecordingNumber:state.hardwareRecordingNumber,
+                recordingId:state.recordingId || null
+            })
 
             state.currSymptom = {}
 
@@ -72,9 +77,20 @@ export const currentRecording = (state = defaultState, action) => {
                 recordingClickCounter:0
             }
 
-            socket.emit('client/submit/rating', {...action.payload,hardwareRecordingNumber:state.hardwareRecordingNumber})
+            socket.emit('client/submit/rating', {
+                ...action.payload,
+                hardwareRecordingNumber:state.hardwareRecordingNumber, 
+                recordingId:state.recordingId || null
+            })
 
             return state
+
+        case 'ADD_RECORDING_ID':
+            
+            state = {
+                ...state, 
+                recordingId:action.payload
+            }
 
         default:
             return state

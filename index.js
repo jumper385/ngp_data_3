@@ -51,7 +51,7 @@ io.on('connection', socket => {
             const saveRecording = await newRecording.save()
             console.log(saveRecording)
         }
-        io.to(`${socket.id}`).emit('res@client/recording/state', data)
+        io.to(`${socket.id}`).emit('res@client/recording/state', {id:recordingId})
         io.emit('master/recording/state', data)
         makeNewRecording = false
     })

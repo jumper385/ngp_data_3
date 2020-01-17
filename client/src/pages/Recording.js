@@ -3,6 +3,7 @@ import { SchemaFormV2 } from '../components/forms/SchemaFormV2'
 import { RecordingButton } from '../components/buttons/RecordingButtonV2'
 import { connect } from 'react-redux'
 import Snackbar from '../components/notifications/snackbar'
+import { socket } from '../serverSocket'
 
 const RatingSchema = [
     {type:'range', label:'Overall', name:'overall', min:0, max:10},
@@ -40,6 +41,11 @@ const SymptomSchema = {
 
 const Recording = props => {
     console.log(props)
+
+    socket.on('res@client/recording/state', data => {
+        props.ADD_RECORDING_ID(data.id)
+    })
+
     return (
         <div>
             <Snackbar />
@@ -97,7 +103,8 @@ const mapDispatchToProps = dispatch => ({
     ADD_SHORTCUT_SYMPTOM: e => dispatch({type:'ADD_SHORTCUT_SYMPTOM', payload:e}),
     EDIT_SYMPTOM: e => dispatch({type:'EDIT_SYMPTOM', payload:e}),
     ADD_SYMPTOM: e => dispatch({type:'ADD_SYMPTOM', payload:e }),
-    ADD_RATING: e => dispatch({type:'ADD_RATING', payload:e})
+    ADD_RATING: e => dispatch({type:'ADD_RATING', payload:e}),
+    ADD_RECORDING_ID: e => dispatch({type:'ADD_RECORDING_ID', payload:e})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Recording)
