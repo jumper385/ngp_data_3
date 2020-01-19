@@ -67,7 +67,6 @@ io.on('connection', socket => {
 
     socket.on('client/submit/rating', async data => {
         let { recordingId } = data
-        console.log(recordingId)
         recording = {...recording, endTime:new Date()}
         let rating = {...data}
 
@@ -83,7 +82,6 @@ io.on('connection', socket => {
 
     socket.on('client/submit/food', async food => {
         let foodData = {...food, timestamp: food.timestamp}
-        console.log(foodData, food)
         const newFood = await Schemas.Food.create({...foodData})
 
         io.to(`${socket.id}`).emit('res@client/submit/food', newFood)
