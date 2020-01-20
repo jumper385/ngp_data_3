@@ -24,7 +24,7 @@ const Symptom = new mongoose.Schema({
     symptom: String, 
     severity: Number,
     location: String,
-    timestamp: {type: Date, default: new Date()},
+    timestamp: {required:true, type: Date, default: new Date()},
 })
 
 const Rating = new mongoose.Schema({
@@ -34,14 +34,14 @@ const Rating = new mongoose.Schema({
     abdPain:Number,
     bloating:Number,
     wind:Number,
-    timestamp: {type:Date, default: new Date()},
+    timestamp: {required:true, type:Date, default: new Date()},
 })
 
 const Food = new mongoose.Schema({
     ...GlobalParameters,
     foodName: String,
     components: String,
-    timestamp: { type: Date, default: new Date()},
+    timestamp: { required:true, type: Date, default: new Date()},
 })
 
 const Context = new mongoose.Schema({
@@ -51,7 +51,7 @@ const Context = new mongoose.Schema({
     stress: Number,
     sleep: Number,
     energy: Number,
-    timestamp: { type: Date, default: new Date()},
+    timestamp: { required:true, type: Date, default: new Date()},
 })
 
 module.exports = {
