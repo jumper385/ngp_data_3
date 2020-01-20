@@ -36,7 +36,12 @@ io.on('connection', socket => {
     
     socket.on('client/recording/state', async data => {
 
+        console.log('recording pressed...')
+        console.log(data)
+
         if((data.recordingId == null) && data.isRecording){
+
+            console.log('recording change...')
 
             let newId = shortid.generate()
 

@@ -25,7 +25,7 @@ export const currentRecording = (state = defaultState, action) => {
                 recordingClickCounter: state.recordingClickCounter+1 || 1,
             }
 
-            socket.emit('client/recording/state', {isRecording: state.isRecording, hardwareRecordingNumber:state.hardwareRecordingNumber})
+            socket.emit('client/recording/state', {isRecording: state.isRecording, hardwareRecordingNumber:state.hardwareRecordingNumber, recordingId:state.recordingId || null})
 
             return state
 
