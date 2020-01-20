@@ -132,31 +132,17 @@ app.get('/api', async(req,res) => {
 
 })
 
-app.delete('/api/recordings', async(req,res) => {
-    let deleteReturns = null
+app.delete('/api/ATOMIC_DELETE', async(req,res) => {
+    console.log('hmmm... this is very dangerous...')
+    let deleteReturns_rec, deleteReturns_symp, deleteReturns_rate = null
     console.log(req.body)
     if(req.body.password == process.env.MASTER_KEY){
-        deleteReturns = await Schemas.Recording.find(req.body.query).deleteMany()
+        deleteReturns_rec = await Schemas.Recording.find(req.body.query).deleteMany()
+        deleteReturns_symp = await Schemas.Symptom.find(req.body.query).deleteMany()
+        deleteReturns_rate = await Schemas.Rating.find(req.body.query).deleteMany()
     }
-    res.json(deleteReturns || 'nothing...')
-})
 
-app.delete('/api/symptoms', async(req,res) => {
-    let deleteReturns = null
-    console.log(req.body)
-    if(req.body.password == process.env.MASTER_KEY){
-        deleteReturns = await Schemas.Symptom.find(req.body.query).deleteMany()
-    }
-    res.json(deleteReturns || 'nothing...')
-})
-
-app.delete('/api/overalls', async(req,res) => {
-    let deleteReturns = null
-    console.log(req.body)
-    if(req.body.password == process.env.MASTER_KEY){
-        deleteReturns = await Schemas.Rating.find(req.body.query).deleteMany()
-    }
-    res.json(deleteReturns || 'nothing...')
+    res.json({rec:deleteReturns_rec, symp:deleteReturns_symp, rate:deleteReturns_rate} || 'nothing...')
 })
 
 app.delete('/api/foods', async(req,res) => {
@@ -175,6 +161,22 @@ app.delete('/api/contexts', async(req,res) => {
         deleteReturns = await Schemas.Context.find(req.body.query).deleteMany()
     }
     res.json(deleteReturns || 'nothing...')
+})
+
+app.put('/api/ATOMIC_EDIT', async(req,res) => {
+
+    let {query, categories, delta, password} = req.body
+
+    console.log('hmmm.... are you sure this is alright?')
+    let editReturns_rec, editReturns_symp, editReturns_rate = null
+    console.log(req.body)
+    if(password == process.env.MASTER_KEY){
+        editReturns_rec = await Schemas.Recording.find(req.body.query).updateMany({$set: {...delta}})
+        editReturns_symp = await Schemas.Symptom.find(req.body.query).updateMany({$set: {...delta}})
+        editReturns_rate = await Schemas.Rating.find(req.body.query).updateMany({$set: {...delta}})
+    }
+
+    res.json({rec:editReturns_rec, symp:editReturns_symp, rate:editReturns_rate} || null)
 })
 
 app.get('*', (req,res) => {
