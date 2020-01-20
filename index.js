@@ -48,7 +48,8 @@ io.on('connection', socket => {
             recording = {
                 recordingId:newId,
                 startTime:new Date(),
-                hardwareRecordingNumber:data.hardwareRecordingNumber
+                hardwareRecordingNumber:data.hardwareRecordingNumber,
+                timestamp: new Date()
             }
 
             const newRecording = await Schemas.Recording.create({...recording})
@@ -61,7 +62,8 @@ io.on('connection', socket => {
     socket.on('client/submit/symptom', async data => {
 
         const newSymptom = new Schemas.Symptom({
-            ...data
+            ...data,
+            timestamp: new Date()
         })
 
         const saveRecording = await newSymptom.save()
