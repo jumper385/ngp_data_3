@@ -86,6 +86,7 @@ const App = props => {
             <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
             <Route path='/login'><Login /></Route>
             {process.env.NODE_ENV === 'development' && <Route path='/test'><Test /></Route>}
+            <Route path='/test'><Test /></Route>
 
           </Switch>
           <GlobalStyle />
