@@ -41,6 +41,7 @@ const Food = new mongoose.Schema({
     ...GlobalParameters,
     foodName: String,
     components: String,
+    fodmapType: String,
     timestamp: { required:true, type: Date, default: new Date()},
 })
 
@@ -54,10 +55,18 @@ const Context = new mongoose.Schema({
     timestamp: { required:true, type: Date, default: new Date()},
 })
 
+const User = new mongoose.Schema({
+    username: { type:String, required:true },
+    password: { type:String, required:true },
+    name: { type:String, required:true },
+    isAdmin: Boolean,
+})
+
 module.exports = {
     Recording: mongoose.model('Recording', Recording),
     Symptom: mongoose.model('Symptom', Symptom),
     Food: mongoose.model('Food', Food),
     Context: mongoose.model('Context', Context),
-    Rating: mongoose.model('Rating', Rating)
+    Rating: mongoose.model('Rating', Rating),
+    User: mongoose.model('User', User)
 }

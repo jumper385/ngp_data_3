@@ -7,6 +7,8 @@ const shortid = require('shortid')
 const mongoose = require('mongoose')
 const path = require('path')
 const bodyParser = require('body-parser')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 const MONGO_URL = process.env.MONGO_URI
 mongoose.connect(MONGO_URL, {useNewUrlParser:true, useUnifiedTopology:true})
@@ -29,7 +31,6 @@ app.use(bodyParser.urlencoded({extended:true}))
 io.on('connection', socket => {
 
     let recording
-    let makeNewRecording = true
 
     io.emit('master/meta/connect', `socket ${socket.id} connected`)
     io.to(`${socket.id}`).emit('res@client/meta/connect')
@@ -61,10 +62,14 @@ io.on('connection', socket => {
 
     socket.on('client/submit/symptom', async data => {
 
+        console.log(data)
+
         const newSymptom = new Schemas.Symptom({
             ...data,
             timestamp: new Date()
         })
+
+        console.log(newSymptom)
 
         const saveRecording = await newSymptom.save()
         io.to(`${socket.id}`).emit('res@client/submit/symptom', saveRecording)
@@ -103,6 +108,20 @@ io.on('connection', socket => {
         io.emit('master/submit/context', newContext)
     })
 
+    socket.on('client/login/submit', async login => {
+        let userQuery = await Schemas.User.findOne({username:login.username})
+
+        if(userQuery.username === login.username){
+            let { password } = login
+            let isMatch = await bcrypt.compare(password, userQuery.password)
+            const token = isMatch && await jwt.sign({...userQuery}, 'st18chenh')
+            socket.emit('server/login/response', {loggedIn:isMatch, jwt:token})
+        } else {
+            socket.emit('server/login/response', {loggedIn:false, jwt:null})
+        }
+        
+    })
+
     socket.on('disconnect', () => {
         io.emit('master/meta/disconnect', `socket ${socket.id} disconnected`)
     })
@@ -132,6 +151,36 @@ app.get('/api', async(req,res) => {
         contexts: [...contexts]
     })
 
+})
+
+app.post('/api/login', async(req,res) => {
+
+    let userQuery = await Schemas.User.find({username:req.body.username})
+    console.log(userQuery)
+
+    if(userQuery.length >= 1) {
+        res.json({error:'user already exists'})
+        return 
+    }
+
+    try{
+
+        let newObject = {
+            ...req.body, 
+            password: await bcrypt.hash(req.body.password, 10)
+        }
+
+        let newUser = await Schemas.User.create(newObject)
+        res.json(newUser)
+
+        return
+
+    } catch(err) {
+        res.json(err)
+
+        return
+    }
+    
 })
 
 app.delete('/api/ATOMIC_DELETE', async(req,res) => {

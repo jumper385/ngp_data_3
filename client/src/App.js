@@ -8,6 +8,9 @@ import Context from './pages/Context';
 import { socket } from './serverSocket';
 import { connect } from 'react-redux'
 import Home from './pages/Home';
+import Login from './pages/Login';
+import { useCookies } from 'react-cookie'
+import { Test } from './pages/Test';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -46,6 +49,8 @@ const RecordingStatusBar = styled.div`
 
 const App = props => {
 
+  let [cookies, setCookies] = useCookies()
+
   const onFoodSubmit = foods => {
     socket.emit('client/submit/food', {...foods, timestamp:foods.timestamp})
   }
@@ -54,28 +59,45 @@ const App = props => {
     socket.emit('client/submit/context', {...context, timestamp: context.timestamp || new Date()})
   }
 
-  return(
-    <Router>
-      <StyledAppDiv className='App'>
+  socket.on('server/login/response', response => {
+    console.log(response)
+    setCookies(['jwt'], response.jwt)
+    setCookies(['loggedIn'], response.loggedIn)
+    console.log(cookies)
+  })
 
-        <RecordingStatusBar recording={props.currentRecording.isReadyToRecord}>
-          <p>{props.currentRecording.isReadyToRecord ? `You're recording...` : null}</p>
-        </RecordingStatusBar>
+  if(cookies.loggedIn){
 
-        <FixedNavBar />
+    return(
+      <Router>
+        <StyledAppDiv className='App'>
+  
+          <RecordingStatusBar recording={props.currentRecording.isReadyToRecord}>
+            <p>{props.currentRecording.isReadyToRecord ? `You're recording...` : null}</p>
+          </RecordingStatusBar>
+  
+          <FixedNavBar />
+  
+          <Switch>
+  
+            <Route exact path='/'><Home /></Route>
+            <Route path='/recording'><Recording/></Route>
+            <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
+            <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
+            <Route path='/login'><Login /></Route>
+            {process.env.NODE_ENV === 'development' && <Route path='/test'><Test /></Route>}
 
-        <Switch>
+          </Switch>
+          <GlobalStyle />
+        </StyledAppDiv>
+      </Router>
+    )
 
-          <Route exact path='/'><Home /></Route>
-          <Route path='/recording'><Recording/></Route>
-          <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
-          <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
-
-        </Switch>
-        <GlobalStyle />
-      </StyledAppDiv>
-    </Router>
-  )
+  } else {
+    return (
+      <Login />
+    )
+  }
 
 }
 

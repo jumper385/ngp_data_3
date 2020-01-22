@@ -86,7 +86,8 @@ export const currentRecording = (state = defaultState, action) => {
                 ...state.currSymptom, 
                 ...action.payload, 
                 hardwareRecordingNumber:state.hardwareRecordingNumber,
-                recordingId:state.recordingId || null
+                recordingId:state.recordingId || null,
+                timestamp: new Date()
             })
 
             state.currSymptom = {}
