@@ -79,10 +79,13 @@ const Recording = props => {
                 </div> : 
                 props.isReadyToRecord ? 
                 (props.recordingClickCounter > 1) ? 
-                <SchemaFormV2 onReadyForm={e => {
-                    props.ADD_RATING(e)
-                    props.RESET()
-                }} schema={RatingSchema}/> :
+                <div>
+                    <p style={{textAlign:'center'}}>Rate your overall feeling throughout this recording</p>
+                    <SchemaFormV2 onReadyForm={e => {
+                        props.ADD_RATING(e)
+                        props.RESET()
+                    }} schema={RatingSchema}/>
+                </div> :
                 'not recording'
                 :
                 null

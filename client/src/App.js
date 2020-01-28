@@ -49,6 +49,8 @@ const RecordingStatusBar = styled.div`
 
 const App = props => {
 
+  console.log(process.env)
+
   let [cookies, setCookies] = useCookies()
 
   const onFoodSubmit = foods => {
