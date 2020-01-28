@@ -13,7 +13,7 @@ const RatingSchema = [
 ]
 
 const RecordingNumberSchema = [
-    {type:'number', label:'Hardware Recording Number', name:'hardwareRecordingNumber'}
+    {type:'number', label:'Hardware Recording Number', name:'hardwareRecordingNumber', hint:'This NUMBER is displayed on the recording device\'s screen'}
 ]
 
 const SymptomSchema = {
@@ -52,7 +52,7 @@ const Recording = props => {
             <Snackbar />
             {props.isReadyToRecord ? 
                 <RecordingButton onClick={props.CHANGE_RECORDING_STATE}>{
-                    props.isRecording ? 'pause' : 'play'
+                    props.isRecording ? 'Pause Logging' : props.recordingClickCounter > 1 ? 'Resume Logging' : 'Start Logging'
                 }</RecordingButton> :
                 <SchemaFormV2 onReadyForm={props.ADD_HARDWARE_RECORDING_NUMBER} schema={RecordingNumberSchema}/>
             }
@@ -81,6 +81,7 @@ const Recording = props => {
                 (props.recordingClickCounter > 1) ? 
                 <div>
                     <p style={{textAlign:'center'}}>Rate your overall feeling throughout this recording</p>
+                    <p style={{textAlign:'center'}}>When you've finished rating this recording, press the 'Submit' button to complete the recording</p>
                     <SchemaFormV2 onReadyForm={e => {
                         props.ADD_RATING(e)
                         props.RESET()
