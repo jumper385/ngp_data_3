@@ -25,6 +25,7 @@ const PORT = process.env.PORT || 8080
 
 app.use(cors())
 app.use(express.static(path.join(__dirname, 'client/build')))
+app.use(express.static(path.join(__dirname, 'client_v2/build')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
@@ -230,8 +231,12 @@ app.put('/api/ATOMIC_EDIT', async(req,res) => {
     res.json({rec:editReturns_rec, symp:editReturns_symp, rate:editReturns_rate} || null)
 })
 
-app.get('*', (req,res) => {
+app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'))
+})
+
+app.get('/client2*', (req,res) => {
+    res.sendFile(path.join(__dirname+'/client_v2/build/index.html'))
 })
 
 server.listen(PORT, () => console.log(`listening on PORT:${PORT}`))
