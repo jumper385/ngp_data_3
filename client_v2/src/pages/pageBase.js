@@ -11,7 +11,7 @@ export const BasePage = styled(animated.div)`
     background:white;
     color:black;
     min-height:100vh;
-    padding-top:111pt;
+    padding-top:81pt;
     top:0;
     left:0;
     width:100vw;
@@ -34,6 +34,6 @@ export const BasePage = styled(animated.div)`
     }
 
     form {
-        margin-top:24pt;
+        margin-top:51pt;
     }
 `

@@ -6,8 +6,11 @@ import { BasePage } from '../pageBase'
 
 export const Food = props => {
 
-    let { handleSubmit, register, errors } = useForm()
-    const onSubmit = data => console.log(data)
+    let { handleSubmit, register, errors, reset} = useForm()
+    const onSubmit = data => {
+        console.log(data)
+        reset()
+    }
 
     return (
         <BasePage>
@@ -20,20 +23,14 @@ export const Food = props => {
                 <TextInput label='What did you Eat?' error={errors} styling={{
                     name: 'foodName',
                     type: 'text',
-                    placeholder: `Enter your first name...`,
+                    placeholder: `What was the name of the food`,
                     ref: register({ required: true })
                 }} />
 
-                <TextInput label='When was this?' error={errors} styling={{
-                    name: 'foodName',
-                    type: 'text',
-                    placeholder: `Enter your first name...`,
-                    ref: register({ required: true })
-                }} />
-
-                <TextInput label='When was this?' error={errors} styling={{
+                <TextInput label='Time of Consumption' error={errors} styling={{
                     name: 'time',
                     type: 'time',
+                    placeholder: 'What time did you have it at?',
                     ref: register({ required: true })
                 }} />
 
