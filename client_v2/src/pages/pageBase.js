@@ -15,6 +15,7 @@ export const BasePage = styled(animated.div)`
     top:0;
     left:0;
     width:100vw;
+    overflow-x: hidden;
 
     .subHeading {
         text-transform:uppercase;

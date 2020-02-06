@@ -10,9 +10,13 @@ import { useSpring } from 'react-spring'
 const SymptomForm = props => {
 
     const SlideIn = useSpring({
-        left: !props.recordingPage.complexFormOpen ? '12pt' : '400pt',
-        from: {left: !props.recordingPage.complexFormOpen ? '400pt' : '12pt'},
-        config: {tension:1000, mass:3, friction:60}
+        left: props.recordingPage.complexFormOpen ? '12pt' : '400pt',
+        opacity: props.recordingPage.complexFormOpen ? 1 : 0,
+        from: { 
+            left: !props.recordingPage.complexFormOpen ? '12pt' : '400pt', 
+            opacity: !props.recordingPage.complexFormOpen ? 1 : 0,
+        },
+        config: { tension: 1000, mass: 3, friction: 60 }
     })
 
     let { register, handleSubmit, reset, watch, errors } = useForm()
@@ -30,9 +34,9 @@ const SymptomForm = props => {
                     left: '12pt',
                     minHeight: 'calc(100vh - 24pt)',
                     top: '12pt',
-                    borderRadius:'12pt',
-                    zIndex:110,
-                    boxShadow:'0 0 24pt rgba(0,0,0,.5)',
+                    borderRadius: '12pt',
+                    zIndex: 110,
+                    boxShadow: '0 0 24pt rgba(0,0,0,.5)',
 
                     ...SlideIn
 
@@ -96,8 +100,8 @@ const SymptomForm = props => {
     }
 }
 
-const mapStateToProps = state => ({...state})
+const mapStateToProps = state => ({ ...state })
 const mapDispatchToProps = dispatch => ({
-    toggleSymptomForm: () => dispatch({type:'TOGGLE_SYMPTOM_FORM'})
+    toggleSymptomForm: () => dispatch({ type: 'TOGGLE_SYMPTOM_FORM' })
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SymptomForm)
