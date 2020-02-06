@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import CreateAccount from './pages/CreateAccount/CreateAccount';
 import Context from './pages/Context';
 import { Food } from './pages/Food/Food';
+import Recording from './pages/Recording/Recording';
 
 // Root Styling!
 const RootDiv = styled.div`
@@ -28,12 +29,12 @@ function App() {
     <Router>
       <RootDiv className="App">
         <Menu />
-        <MenuButton color='black'/>
+        <MenuButton color='rgba(0,0,0,.18)'/>
 
         <Switch>
           <Route exact path='/'><Welcome /></Route>
           <Route path='/welcome'><Welcome /></Route>
-          <Route path='/log'><Welcome /></Route>
+          <Route path='/log'><Recording /></Route>
           <Route path='/login'><Login /></Route>
           <Route path='/food'><Food /></Route>
           <Route path='/context'><Context /></Route>

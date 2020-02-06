@@ -59,6 +59,7 @@ const Context = props => {
                     name: 'sleep',
                     type: 'number',
                     ref: register,
+                    pattern:'[0-9]*',
                     placeholder: 'Type in the NUMBER of hours you\'ve slept... '
                 }} />
 
