@@ -54,7 +54,9 @@ const SymptomForm = props => {
                         background:'none',
                         border:'none',
                         color:'rgba(0,0,0,.12)',
-                        fontSize:'24pt'
+                        fontSize:'24pt',
+                        margin:0,
+                        padding:0,
                     }} onClick={() => {
                         props.toggleSymptomForm()
                         console.log(props)
