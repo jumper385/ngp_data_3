@@ -7,6 +7,16 @@ const defaultReducer = (state = {}, action) => {
     }
 }
 
+const recordingReducer = (state={}, action) => {
+    switch(action.type){
+        case 'TOGGLE_SYMPTOM_FORM':
+            state = {...state, complexFormOpen: state.complexFormOpen ? false : true }
+            return state
+        default:
+            return state
+    }
+}
+
 const appStateReducer = (state={},action) => {
 
     switch(action.type){
@@ -31,6 +41,7 @@ const appStateReducer = (state={},action) => {
 const rootReducer = combineReducers({
     default: defaultReducer,
     app_state: appStateReducer,
+    recordingPage: recordingReducer,
 })
 
 export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

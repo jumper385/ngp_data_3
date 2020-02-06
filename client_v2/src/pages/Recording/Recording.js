@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { BasePage } from '../pageBase'
-import { ToggleSwitch } from '../../components/buttons/buttons'
-import { faMicrophoneAlt, faStop, faUndoAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faStop, faUndoAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
-import { animated, useSpring, useTransition } from 'react-spring'
+import { animated } from 'react-spring'
 import Timer from 'react-compound-timer'
 import { Keyframes } from 'react-spring/renderprops'
+import SymptomForm from './ComplexSymptomForm'
+import { connect } from 'react-redux'
 
 const LogControl = styled(animated.div)`
     position:absolute;
@@ -168,16 +169,7 @@ const Waiting = styled(animated.div)`
 `
 
 const Recording = props => {
-
-    let [state, setState] = useState([1, 2, 3, 4])
-    let [index, setIndex] = useState(0)
-
-    let transition = useTransition(state[index], item => item, {
-        from: { opcaity: 0, bottom: '-100%', transform: 'scale(1,0)' },
-        enter: { opacity: 1, bottom: '0%', transform: 'scale(1,1)' },
-        leave: { opacity: 0, bottom: '100%', transform: 'scale(1,0' },
-    })
-
+    
     return (
         <BasePage style={{ background: 'linear-gradient(90deg, #241034 0%, #1C0638 100%)', padding: 0 }}>
 
@@ -256,7 +248,7 @@ const Recording = props => {
                 <p style={{ color: 'white', fontSize: '9pt', marginLeft: '24pt' }}>Complex Symptoms</p>
                 <SymptomHolder>
 
-                    <SimpleSymptomButton className='simpleSymptom' >
+                    <SimpleSymptomButton className='simpleSymptom' onClick={props.toggleSymptomForm}>
                         <div>
                             <FontAwesomeIcon className='buttonIcon' icon={faPlusCircle} />
                             <p>Pain</p>
@@ -286,8 +278,15 @@ const Recording = props => {
                 </SymptomHolder>
             </div>
 
+            <SymptomForm symptom='pain' />
+
         </BasePage >
     )
 }
 
-export default Recording
+const mapStateToProps = state => ({...state})
+const mapDispatchToProps = dispatch => ({
+    toggleSymptomForm: () => dispatch({type:'TOGGLE_SYMPTOM_FORM'})
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(Recording)
