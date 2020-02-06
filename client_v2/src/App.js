@@ -1,6 +1,6 @@
 import React from 'react';
 import 'normalize.css'
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import Welcome from './pages/Welcome';
 import Login from './pages/Login/Login';
@@ -24,12 +24,12 @@ const RootDiv = styled.div`
 `
 // The Root page of the app...
 
-function App() {
+const App = props => {
   return (
     <Router>
       <RootDiv className="App">
         <Menu />
-        <MenuButton color='rgba(0,0,0,.18)'/>
+        <MenuButton color='rgba(0,0,0,.18)' />
 
         <Switch>
           <Route exact path='/'><Welcome /></Route>
@@ -40,12 +40,12 @@ function App() {
           <Route path='/context'><Context /></Route>
           <Route path='/newUser'><CreateAccount /></Route>
         </Switch>
-      
+
       </RootDiv>
     </Router>
   );
 }
 
-const mapStateToProps = state => ({...state})
+const mapStateToProps = state => ({ ...state })
 
 export default connect(mapStateToProps)(App);
