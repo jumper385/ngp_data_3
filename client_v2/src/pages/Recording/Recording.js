@@ -248,14 +248,20 @@ const Recording = props => {
                 <p style={{ color: 'white', fontSize: '9pt', marginLeft: '24pt' }}>Complex Symptoms</p>
                 <SymptomHolder>
 
-                    <SimpleSymptomButton className='simpleSymptom' onClick={props.toggleSymptomForm}>
+                    <SimpleSymptomButton className='simpleSymptom' onClick={() => {
+                        props.toggleSymptomState('pain')
+                        props.toggleSymptomForm()
+                    }}>
                         <div>
                             <FontAwesomeIcon className='buttonIcon' icon={faPlusCircle} />
                             <p>Pain</p>
                         </div>
                     </SimpleSymptomButton>
 
-                    <SimpleSymptomButton className='simpleSymptom' >
+                    <SimpleSymptomButton className='simpleSymptom' onClick={() => {
+                        props.toggleSymptomState('bloating')
+                        props.toggleSymptomForm()
+                    }}>
                         <div>
                             <FontAwesomeIcon className='buttonIcon' icon={faPlusCircle} />
                             <p>Bloating</p>
@@ -286,7 +292,8 @@ const Recording = props => {
 
 const mapStateToProps = state => ({...state})
 const mapDispatchToProps = dispatch => ({
-    toggleSymptomForm: () => dispatch({type:'TOGGLE_SYMPTOM_FORM'})
+    toggleSymptomForm: () => dispatch({type:'TOGGLE_SYMPTOM_FORM'}),
+    toggleSymptomState: e => dispatch({type:'TOGGLE_SYMPTOM_STATE', payload:e})
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(Recording)

@@ -10,8 +10,15 @@ const defaultReducer = (state = {}, action) => {
 const recordingReducer = (state={}, action) => {
     switch(action.type){
         case 'TOGGLE_SYMPTOM_FORM':
-            state = {...state, complexFormOpen: state.complexFormOpen ? false : true }
+            state = {
+                ...state, 
+                complexFormOpen: state.complexFormOpen ? false : true,
+                symptomState: !state.complexFormOpen ? state.symptomState : null
+            }
             return state
+        case 'TOGGLE_SYMPTOM_STATE':
+            console.log(action.payload)
+            state = {...state, symptomState: state.symptomState ? null : action.payload}
         default:
             return state
     }
