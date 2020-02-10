@@ -20,6 +20,7 @@ const Schemas = require('./schemas/schemas')
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)
+const router = express.Router()
 
 const PORT = process.env.PORT || 8080
 
@@ -235,8 +236,10 @@ app.get('/', (req,res) => {
     res.sendFile(path.join(__dirname+'/client/build/index.html'))
 })
 
-app.get('/client2*', (req,res) => {
+router.get('/', (req,res) => {
     res.sendFile(path.join(__dirname+'/client_v2/build/index.html'))
 })
+
+app.use('/client2', router)
 
 server.listen(PORT, () => console.log(`listening on PORT:${PORT}`))

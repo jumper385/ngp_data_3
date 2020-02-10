@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import { useCookies } from 'react-cookie'
 import { Test } from './pages/Test';
+import LoginV2 from './pages/loginPage/LoginV2';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -86,9 +87,8 @@ const App = props => {
             <Route path='/recording'><Recording/></Route>
             <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
             <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
-            <Route path='/login'><Login /></Route>
-            {process.env.NODE_ENV === 'development' && <Route path='/test'><Test /></Route>}
-            <Route path='/test'><Test /></Route>
+            <Route path='/login'><LoginV2 /></Route>
+            {process.env.NODE_ENV === 'development' && <Route path='/test'><LoginV2 /></Route>}
 
           </Switch>
           <GlobalStyle />
@@ -98,7 +98,9 @@ const App = props => {
 
   } else {
     return (
-      <Login />
+      <StyledAppDiv className='App'>
+        <LoginV2 />
+      </StyledAppDiv>
     )
   }
 
