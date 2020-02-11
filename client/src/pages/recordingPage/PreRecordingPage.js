@@ -38,6 +38,7 @@ const PreRecordingPage = props => {
             </div>
 
             <animated.form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: '300pt', margin: '0 auto', ...fadeIn}}>
+                
                 <TextInput label='Device Number' error={errors} styling={{
                     name: 'deviceNumber',
                     type: 'number',

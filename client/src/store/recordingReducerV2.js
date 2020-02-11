@@ -1,7 +1,7 @@
 import { socket } from "../serverSocket";
 
 const defaultState = {
-    currentPage: 0
+    currentPage: 1
 }
 
 export const recordingReducerV2 = (state = defaultState, action) => {

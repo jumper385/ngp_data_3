@@ -88,6 +88,37 @@ const RecordingDisplay = styled(animated.div)`
 
 `
 
+const SimpleSymptomContainer = styled(animated.div)`
+    position:absolute;
+    top:171pt;
+    background:none;
+    width:100%;
+    overflow-x:scroll;
+    right:0;
+    display:flex;
+    box-sizing:border-box;
+
+    .symptomCard {
+        margin: 0 6pt;
+        background:white;
+        border-radius:12pt;
+        padding:9pt;
+        max-width:120;
+        box-sizing:border-box;
+        font-size:9pt;
+        flex-shrink:0;
+        flex-grow:0;
+
+        : first-of-type {
+            margin-left:36pt;
+            flex-shrink:0;
+            flex-grow:0;
+        }
+
+    }
+
+`
+
 
 const DataCollection = props => {
 
@@ -132,6 +163,19 @@ const DataCollection = props => {
         }
     })
 
+    const slideFromRight = useSpring({
+        from: {
+            right: state.bool ? '-100%' : '0%'
+        },
+        right: !state.bool ? '-100%' : '0%',
+        config: {
+            tension: 300,
+            mass: 0.3,
+            friction: 25,
+            precision: 0.001,
+        }
+    })
+
     return (
 
         <Timer startImmediately={false}>
@@ -166,6 +210,40 @@ const DataCollection = props => {
                         <RecordButton style={buttonAnimation} onClick={recordButtonPress}>
                             <FontAwesomeIcon className='icon' icon={state.bool ? faStop : faMicrophoneAlt} />
                         </RecordButton>
+
+                        <SimpleSymptomContainer style={slideFromRight}>
+                            <div className='symptomCard'>
+                                <p>Burp</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Urge to Poo</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Fart</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Gurgle</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Burp</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Urge to Poo</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Fart</p>
+                            </div>
+
+                            <div className='symptomCard'>
+                                <p>Gurgle</p>
+                            </div>
+                        </SimpleSymptomContainer>
 
                     </PageBase>
                 )
