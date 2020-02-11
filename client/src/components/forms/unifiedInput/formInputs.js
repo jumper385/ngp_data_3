@@ -43,8 +43,14 @@ const StyledInput = styled.div`
         span {
             color:red;
         }
-
     }
+
+    .hint {
+        padding-left: 9pt;
+        color:rgba(0,0,0,.24);
+        font-size:7pt;
+    }
+
 `
 
 const VariableInputField = React.forwardRef((props, ref) => {

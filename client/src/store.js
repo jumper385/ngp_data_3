@@ -1,5 +1,6 @@
 import { createStore, combineReducers} from 'redux'
 import { currentRecording } from './store/recordingReducer'
+import { recordingReducerV2 } from './store/recordingReducerV2'
 
 const defaultState = {}
 
@@ -24,7 +25,8 @@ const metaReducer = (state = defaultState, action) => {
 const rootReducer = combineReducers({
     default:defaultReducer,
     metaReducer:metaReducer,
-    currentRecording:currentRecording
+    currentRecording:currentRecording,
+    recordingReducer: recordingReducerV2
 })
 
 export const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())

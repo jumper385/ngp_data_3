@@ -11,6 +11,7 @@ export const PageBase = styled(animated.div)`
     left:0;
     box-sizing:border-box;
     background:white;
+    padding: 0 24pt;
 
     .pageHeading {
         max-width:300pt;
@@ -18,7 +19,9 @@ export const PageBase = styled(animated.div)`
         text-align:center;
         display:flex;
         flex-direction:column;
-        margin-top:24pt;
+        margin-top:72pt;
+        align-items:center;
+        margin-bottom:36pt;
 
         .pageCategory {
             text-transform: uppercase;
@@ -37,8 +40,14 @@ export const PageBase = styled(animated.div)`
             font-size:24pt;
             margin:0;
             text-transform:uppercase;
-            font-weight:bold;
             color:rgba(0,0,0,.86);
+        }
+
+        .pageInstructions {
+            font-size:9pt
+            color:rgba(0,0,0,.86);
+            padding:0 12pt;
+            box-sizing:border-box;
         }
 
     }
