@@ -33,7 +33,7 @@ const RecordingDisplay = styled(animated.div)`
     position:absolute;
     top:0;
     right:0;
-    height:33vh;
+    height:137pt;
     width:100vw;
     background:white;
     border-radius:0 0 12pt 12pt;
@@ -41,7 +41,7 @@ const RecordingDisplay = styled(animated.div)`
 
     .recordingDurationContainer {
         bottom:48pt;
-        left:36pt;
+        right:36pt;
         position:absolute;
 
         .recordingDurationLabel {
@@ -50,11 +50,14 @@ const RecordingDisplay = styled(animated.div)`
             font-size:9pt;
             color:rgba(0,0,0,.24);
             font-weight:bold;
+            position:relative;
         }
 
         .recordingDuration {
             display:inline-flex;
             align-items:center;
+            position:absolute;
+            right:0;
     
             .auxLabel {
                 display:flex;
@@ -92,9 +95,9 @@ const DataCollection = props => {
 
     const buttonAnimation = useSpring({
         from: {
-            transform: state.bool ? 'translate(calc(50vw - 50%), calc(50vh - 50%)) rotate(360deg) scale(1)' : 'translate(calc(66.666vw - 50%), calc(20vh - 50%)) rotate(0deg) scale(0.5)',
+            transform: state.bool ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
         },
-        transform: !state.bool ? 'translate(calc(50vw - 50%), calc(50vh - 50%)) rotate(360deg) scale(1)' : 'translate(calc(80vw - 50%), calc(20vh - 50%)) rotate(0deg) scale(0.5)',
+        transform: !state.bool ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
         config: {
             tension: 200,
             mass: 0.25,
