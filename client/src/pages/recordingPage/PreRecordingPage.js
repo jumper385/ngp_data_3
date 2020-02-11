@@ -42,14 +42,16 @@ const PreRecordingPage = props => {
                     name: 'deviceNumber',
                     type: 'number',
                     placeholder: 'Which device are you using right now?',
-                    ref: register({ required: true })
+                    ref: register({ required: true }),
+                    pattern:'[0-9]+',
                 }} hint='This is the number located on the back of your device' />
 
                 <TextInput label='Hardware Recording Number' error={errors} styling={{
                     name: 'hardwareRecordingNumber',
                     type: 'number',
                     placeholder: 'What\'s the recording number on the screen?',
-                    ref: register({ required: true })
+                    ref: register({ required: true }),
+                    pattern:'[0-9]+',
                 }} hint='This is the number located on the device display' />
 
                 <br />
