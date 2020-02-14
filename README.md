@@ -6,12 +6,12 @@
 | `./` | GET | gets all the database points |
 | `./login` | POST | allows you to post a new user to the database |
 | `./ATOMIC_DELETE` | DELETE | lets you delete in batches |
-| `./foods` | GET | gets you all the food data |
-| `./contexts` | GET | gets you all the contexts data |
+| `./foods` | DELETE | Deletes all the queried food data |
+| `./contexts` | DELETE | Deletes all the quieries contextual data |
 | `./PASSWORD_TEST` | POST | lets you test the password |
 | `./ATOMIC_EDIT` | PUT | lets you edit in batches | 
 
-## `(GET) ./ ./foods ./contexts` - API ROOT
+## `(GET) ./` - API ROOT
 accepts a json body request in the structure of mongodb queries. It's sent through the `body` of the request body as `json`
 
 `
@@ -43,7 +43,7 @@ Allows you to create a new user. The parameters for this request are sent throug
 `
 
 ## `(DELETE) ./ATOMIC_DELETE` - Delete Batches of Data
-Allows you to delete batches of data based on mongodb queries. It requires the correct `MASTER_KEY` to be passed through as `password` alongside a relevant MongoDB query.
+Allows you to delete batches of `symptoms`, `recordings` & `overalls` based on mongodb queries. It requires the correct `MASTER_KEY` to be passed through as `password` alongside a relevant MongoDB query.
 
 `
 
@@ -52,6 +52,25 @@ Allows you to delete batches of data based on mongodb queries. It requires the c
 
     {
         password: String,
+        query: {
+            mongoQuery1: Mixed,
+            mongoQuery2: Mixed, 
+            ...
+            MongoQueryN: Mixed
+        }
+    }
+
+`
+
+## `(DELETE) ./foods ./contexts` - Deletes queried data
+Allows you to delete `food` or `context` data (depending on which endpoint). This is only possible with the `MASTER_KEY` as a `password`.
+
+`
+
+    ## HTTP DELETE BOdy Structure 
+
+    {
+        password: String, 
         query: {
             mongoQuery1: Mixed,
             mongoQuery2: Mixed, 
@@ -80,7 +99,7 @@ Allows you to create changes to batches of queried MongoDB Data. The `query`, `p
 
 `
 
-    ## `(PUT) ./ATOMIC_EDIT` - Edit batches of data
+    ## HTTP PUT Body Structure
 
     {
         password: String,

@@ -199,9 +199,7 @@ app.delete('/api/ATOMIC_DELETE', async(req,res) => {
     let deleteReturns_rec, deleteReturns_symp, deleteReturns_rate = null
     console.log(req.body)
 
-    let { password } = req.body
-
-    const isPasswordCorrect = await delayedPasswordCheck(password, process.env.MASTER_KEY)
+    const isPasswordCorrect = await delayedPasswordCheck(req.body.password, process.env.MASTER_KEY)
 
     console.log(isPasswordCorrect)
 
@@ -217,7 +215,10 @@ app.delete('/api/ATOMIC_DELETE', async(req,res) => {
 app.delete('/api/foods', async(req,res) => {
     let deleteReturns = null
     console.log(req.body)
-    if(req.body.password == process.env.MASTER_KEY){
+
+    const isPasswordCorrect = await delayedPasswordCheck(req.body.password, process.env.MASTER_KEY)
+
+    if(isPasswordCorrect){
         deleteReturns = await Schemas.Food.find(req.body.query).deleteMany()
     }
     res.json(deleteReturns || 'nothing...')
@@ -226,7 +227,10 @@ app.delete('/api/foods', async(req,res) => {
 app.delete('/api/contexts', async(req,res) => {
     let deleteReturns = null
     console.log(req.body)
-    if(req.body.password == process.env.MASTER_KEY){
+
+    const isPasswordCorrect = await delayedPasswordCheck(req.body.password, process.env.MASTER_KEY)
+
+    if(isPasswordCorrect){
         deleteReturns = await Schemas.Context.find(req.body.query).deleteMany()
     }
     res.json(deleteReturns || 'nothing...')
