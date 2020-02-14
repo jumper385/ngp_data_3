@@ -4,7 +4,7 @@
 | Endpoint | HTTP Request Type | Description
 | - | - | - |
 | `./` | GET | gets all the database points |
-| `./login` | POST | allows you to post a new user to the database |
+| `./login` | POST, DELETE | allows you to post and delete a user in the database (respectively) |
 | `./ATOMIC_DELETE` | DELETE | lets you delete in batches |
 | `./foods` | DELETE | Deletes all the queried food data |
 | `./contexts` | DELETE | Deletes all the quieries contextual data |
@@ -38,6 +38,19 @@ Allows you to create a new user. The parameters for this request are sent throug
         password: String,
         name: String,
         isAdmin: Boolean,
+    }
+
+`
+
+## `(DELETE) ./login` - Delete a new user
+Allows you to delete a queried users. The http request requires the `username` and the `MASTER_KEY` (inputted in the field `password`).
+`
+
+    ## HTTP DELETE Body Structure
+
+    {
+        username: String,
+        password: String,
     }
 
 `
