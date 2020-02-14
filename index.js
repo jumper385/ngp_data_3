@@ -30,6 +30,15 @@ app.use(express.static(path.join(__dirname, 'client_v2/build')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
+const delayedPasswordCheck = (password, checkAgainst) => new Promise((resolve, reject) => {
+    const isCorrect = bcrypt.compare(password, checkAgainst)
+
+    setTimeout(() => {
+        resolve(isCorrect)
+    }, 250 + Math.random()*750)
+
+})
+
 io.on('connection', socket => {
 
     let recording
@@ -189,13 +198,20 @@ app.delete('/api/ATOMIC_DELETE', async(req,res) => {
     console.log('hmmm... this is very dangerous...')
     let deleteReturns_rec, deleteReturns_symp, deleteReturns_rate = null
     console.log(req.body)
-    if(req.body.password == process.env.MASTER_KEY){
+
+    let { password } = req.body
+
+    const isPasswordCorrect = await delayedPasswordCheck(password, process.env.MASTER_KEY)
+
+    console.log(isPasswordCorrect)
+
+    if(isPasswordCorrect){
         deleteReturns_rec = await Schemas.Recording.find(req.body.query).deleteMany()
         deleteReturns_symp = await Schemas.Symptom.find(req.body.query).deleteMany()
         deleteReturns_rate = await Schemas.Rating.find(req.body.query).deleteMany()
     }
 
-    res.json({rec:deleteReturns_rec, symp:deleteReturns_symp, rate:deleteReturns_rate} || 'nothing...')
+    res.json(isPasswordCorrect ? {rec:deleteReturns_rec, symp:deleteReturns_symp, rate:deleteReturns_rate} || 'nothing...' : {message:'auth was wrong...'})
 })
 
 app.delete('/api/foods', async(req,res) => {
@@ -216,6 +232,16 @@ app.delete('/api/contexts', async(req,res) => {
     res.json(deleteReturns || 'nothing...')
 })
 
+app.post('/api/PASSWORD_TEST', async(req,res) => {
+    
+    let { password } = req.body
+
+    const isPasswordCorrect = await delayedPasswordCheck(password, process.env.MASTER_KEY)
+
+    res.json(isPasswordCorrect)
+
+})
+
 app.put('/api/ATOMIC_EDIT', async(req,res) => {
 
     let {query, categories, delta, password} = req.body
@@ -223,10 +249,13 @@ app.put('/api/ATOMIC_EDIT', async(req,res) => {
     console.log('hmmm.... are you sure this is alright?')
     let editReturns_rec, editReturns_symp, editReturns_rate = null
     console.log(req.body)
-    if(password == process.env.MASTER_KEY){
-        editReturns_rec = await Schemas.Recording.find(req.body.query).updateMany({$set: {...delta}})
-        editReturns_symp = await Schemas.Symptom.find(req.body.query).updateMany({$set: {...delta}})
-        editReturns_rate = await Schemas.Rating.find(req.body.query).updateMany({$set: {...delta}})
+
+    const isPasswordCorrect = await delayedPasswordCheck(password, process.env.MASTER_KEY)
+
+    if(isPasswordCorrect){
+        editReturns_rec = await Schemas.Recording.find(query).updateMany({$set: {...delta}})
+        editReturns_symp = await Schemas.Symptom.find(query).updateMany({$set: {...delta}})
+        editReturns_rate = await Schemas.Rating.find(query).updateMany({$set: {...delta}})
     }
 
     res.json({rec:editReturns_rec, symp:editReturns_symp, rate:editReturns_rate} || null)

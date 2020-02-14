@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import Timer from 'react-compound-timer'
+import ComplexSymptomForm from './complexSymptomForm'
 
 const RecordButton = styled(animated.div)`
     position:absolute;
@@ -87,14 +88,23 @@ const RecordingDisplay = styled(animated.div)`
     }
 
 `
-
-const SimpleSymptomContainer = styled(animated.div)`
+const SymptomContainerHolder = styled(animated.div)`
     position:absolute;
     top:171pt;
-    background:none;
-    width:100%;
-    overflow-x:scroll;
     right:0;
+    width:100%;
+
+    .holderTitle {
+        color:white;
+        margin-left:42pt;
+        font-size:9pt;
+    }
+
+`
+const SymptomContainer = styled(animated.div)`
+    background:none;
+    overflow-x:scroll;
+    width:100%;
     display:flex;
     box-sizing:border-box;
 
@@ -103,7 +113,7 @@ const SimpleSymptomContainer = styled(animated.div)`
         background:white;
         border-radius:12pt;
         padding:9pt;
-        max-width:120;
+        max-width:120pt;
         box-sizing:border-box;
         font-size:9pt;
         flex-shrink:0;
@@ -119,16 +129,13 @@ const SimpleSymptomContainer = styled(animated.div)`
 
 `
 
-
 const DataCollection = props => {
-
-    let [state, setState] = useState({})
 
     const buttonAnimation = useSpring({
         from: {
-            transform: state.bool ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
+            transform: props.recordingReducer.isRecording ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
         },
-        transform: !state.bool ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
+        transform: !props.recordingReducer.isRecording ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
         config: {
             tension: 200,
             mass: 0.25,
@@ -138,9 +145,9 @@ const DataCollection = props => {
     })
 
     const colorDarken = useSpring({
-        background: !state.bool ? 'linear-gradient(90deg, white 0%, white 100%)' : 'linear-gradient(90deg, #241034 0%, #1C0638 100%)',
+        background: !props.recordingReducer.isRecording ? 'linear-gradient(90deg, white 0%, white 100%)' : 'linear-gradient(90deg, #241034 0%, #1C0638 100%)',
         from: {
-            background: state.bool ? 'linear-gradient(90deg, white 0%, white 100%)' : 'linear-gradient(90deg, #241034 0%, #1C0638 100%)'
+            background: props.recordingReducer.isRecording ? 'linear-gradient(90deg, white 0%, white 100%)' : 'linear-gradient(90deg, #241034 0%, #1C0638 100%)'
         },
         config: {
             tension: 300,
@@ -152,9 +159,9 @@ const DataCollection = props => {
 
     const slideInTop = useSpring({
         from: {
-            top: state.bool ? '-100%' : '0%'
+            top: props.recordingReducer.isRecording ? '-100%' : '0%'
         },
-        top: !state.bool ? '-100%' : '0%',
+        top: !props.recordingReducer.isRecording ? '-100%' : '0%',
         config: {
             tension: 300,
             mass: 0.3,
@@ -165,9 +172,22 @@ const DataCollection = props => {
 
     const slideFromRight = useSpring({
         from: {
-            right: state.bool ? '-100%' : '0%'
+            right: props.recordingReducer.isRecording ? '-100%' : '0%'
         },
-        right: !state.bool ? '-100%' : '0%',
+        right: !props.recordingReducer.isRecording ? '-100%' : '0%',
+        config: {
+            tension: 300,
+            mass: 0.3,
+            friction: 25,
+            precision: 0.001,
+        }
+    })
+
+    const complexSlideIn = useSpring({
+        from: {
+            left: props.recordingReducer.complexSymptomState ? '-100%' : '0%'
+        },
+        left: !props.recordingReducer.complexSymptomState ? '-100%' : '0%',
         config: {
             tension: 300,
             mass: 0.3,
@@ -178,17 +198,22 @@ const DataCollection = props => {
 
     return (
 
-        <Timer startImmediately={false}>
+        <Timer startImmediately={false} lastUnit='m'>
             {({ start, resume, pause, reset, timerState }) => {
 
+                console.log(timerState)
+
                 const recordButtonPress = () => {
-                    if (state.bool) {
+                    if (props.recordingReducer.isRecording) {
+                        props.STOP_RECORDING()
                         pause()
                         reset()
+                        props.MOVE_PAGE(2)
+
                     } else {
+                        props.START_RECORDING()
                         start()
                     }
-                    setState({ bool: state.bool ? false : true })
                 }
 
                 return (
@@ -208,42 +233,63 @@ const DataCollection = props => {
                         </RecordingDisplay>
 
                         <RecordButton style={buttonAnimation} onClick={recordButtonPress}>
-                            <FontAwesomeIcon className='icon' icon={state.bool ? faStop : faMicrophoneAlt} />
+                            <FontAwesomeIcon className='icon' icon={props.recordingReducer.isRecording ? faStop : faMicrophoneAlt} />
                         </RecordButton>
 
-                        <SimpleSymptomContainer style={slideFromRight}>
-                            <div className='symptomCard'>
-                                <p>Burp</p>
-                            </div>
+                        <SymptomContainerHolder style={{ top: '171pt', ...slideFromRight }}>
+                            <p className='holderTitle'>Simple Symptoms</p>
+                            <SymptomContainer>
 
-                            <div className='symptomCard'>
-                                <p>Urge to Poo</p>
-                            </div>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('burp')}>
+                                    <p>Burp</p>
+                                </div>
 
-                            <div className='symptomCard'>
-                                <p>Fart</p>
-                            </div>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('urgeToPoo')}>
+                                    <p>Urge to Poo</p>
+                                </div>
 
-                            <div className='symptomCard'>
-                                <p>Gurgle</p>
-                            </div>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('fart')}>
+                                    <p>Fart</p>
+                                </div>
 
-                            <div className='symptomCard'>
-                                <p>Burp</p>
-                            </div>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('gurgle')}>
+                                    <p>Gurgle</p>
+                                </div>
 
-                            <div className='symptomCard'>
-                                <p>Urge to Poo</p>
-                            </div>
+                            </SymptomContainer>
+                        </SymptomContainerHolder>
 
-                            <div className='symptomCard'>
-                                <p>Fart</p>
-                            </div>
+                        <SymptomContainerHolder style={{ top: '256pt', ...slideFromRight }}>
+                            <p className='holderTitle'>Complex Symptoms</p>
+                            <SymptomContainer>
 
-                            <div className='symptomCard'>
-                                <p>Gurgle</p>
+                                <div className='symptomCard' onClick={() => props.ENTERING_COMPLEX_SYMPTOM('pain')}>
+                                    <p>Pain</p>
+                                </div>
+
+                                <div className='symptomCard' onClick={() => props.ENTERING_COMPLEX_SYMPTOM('squeeze')}>
+                                    <p>Squeeze</p>
+                                </div>
+
+                                <div className='symptomCard' onClick={() => props.ENTERING_COMPLEX_SYMPTOM('cramping')}>
+                                    <p>Cramping</p>
+                                </div>
+
+                                <div className='symptomCard' onClick={() => props.ENTERING_COMPLEX_SYMPTOM('custom')}>
+                                    <p>Custom</p>
+                                </div>
+
+                            </SymptomContainer>
+                        </SymptomContainerHolder>
+
+                        <PageBase style={{ position: 'absolute', ...complexSlideIn}}>
+                            <p onClick={() => props.REMOVE_COMPLEX_STATE()}>Close</p>
+                            <div className='pageHeading'>
+                                <p className='pageCategory'>Complex Symptom</p>
+                                <p className='pageTitle'>{props.recordingReducer.complexSymptomState}</p>
                             </div>
-                        </SimpleSymptomContainer>
+                            <ComplexSymptomForm />
+                        </PageBase>
 
                     </PageBase>
                 )
@@ -255,5 +301,13 @@ const DataCollection = props => {
 }
 
 const mapStateToProps = state => ({ ...state })
+const mapDispatchToProps = dispatch => ({
+    ADD_SIMPLE_SYMPTOM: e => dispatch({ type: 'ADD_SIMPLE_SYMPTOM', payload: e }),
+    START_RECORDING: e => dispatch({ type: 'START_RECORDING' }),
+    STOP_RECORDING: e => dispatch({ type: 'STOP_RECORDING' }),
+    ENTERING_COMPLEX_SYMPTOM: e => dispatch({ type: 'ENTERING_COMPLEX_SYMPTOM', payload: e }),
+    REMOVE_COMPLEX_STATE: e => dispatch({ type: 'REMOVE_COMPLEX_STATE' }),
+    MOVE_PAGE: pageNumber => dispatch({ type: 'MOVE_PAGE', payload: pageNumber }),
+})
 
-export default connect(mapStateToProps)(DataCollection)
+export default connect(mapStateToProps, mapDispatchToProps)(DataCollection)

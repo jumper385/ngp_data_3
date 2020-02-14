@@ -3,12 +3,9 @@ import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import PreRecordingPage from './PreRecordingPage'
 import DataCollection from './DataCollection'
+import OverallRating from './OverallRating'
 
 const RecordingPageV2 = props => {
-
-    let { register, handleSubmit, reset, errors } = useForm()
-
-    const pages = ['preflight', 'start', 'recording', 'overall']
 
     console.log(props)
 
@@ -18,6 +15,9 @@ const RecordingPageV2 = props => {
 
         case 1:
             return <DataCollection />
+
+        case 2:
+            return <OverallRating />
 
         default:
             return (
@@ -29,7 +29,7 @@ const RecordingPageV2 = props => {
 
 const mapStateToProps = state => ({ ...state })
 const mapDispatchToProps = dispatch => ({
-    MOVE_PAGE: pageNumber => dispatch({type:'MOVE_PAGE', payload:pageNumber}),
-    DEVICE_META: payload => dispatch({type:'DEVICE_META', payload:payload})
+    MOVE_PAGE: pageNumber => dispatch({ type: 'MOVE_PAGE', payload: pageNumber }),
+    DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: { symptom: payload } })
 })
 export default connect(mapStateToProps, mapDispatchToProps)(RecordingPageV2)
