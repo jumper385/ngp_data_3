@@ -7,7 +7,9 @@ const GlobalParameters = {
 
 const GlobalRecordingParameters = {
     hardwareRecordingNumber: Number,
+    deviceNumber: Number,
     recordingId: String,
+    username: String,
 }
 
 const Recording = new mongoose.Schema({

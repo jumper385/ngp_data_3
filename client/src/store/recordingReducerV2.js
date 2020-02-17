@@ -5,6 +5,15 @@ const defaultState = {
 }
 
 export const recordingReducerV2 = (state = defaultState, action) => {
+
+    const recordingMeta = {
+        recordingId: state.recordingId,
+        hardwareRecordingNumber: state.hardwareRecordingNumber,
+        deviceNumber: state.deviceNumber,
+        username: state.username
+    }
+
+
     switch (action.type) {
 
         case 'RESET_RECORDING':
@@ -22,7 +31,7 @@ export const recordingReducerV2 = (state = defaultState, action) => {
 
             state = {
                 ...state,
-                ...action.payload
+                ...action.payload,
             }
 
             return state
@@ -30,7 +39,7 @@ export const recordingReducerV2 = (state = defaultState, action) => {
         case 'ADD_SIMPLE_SYMPTOM':
 
             let newSimpleSymptom = {
-                recordingId: state.recordingId,
+                ...recordingMeta,
                 ...action.payload
             }
 
@@ -56,16 +65,16 @@ export const recordingReducerV2 = (state = defaultState, action) => {
                 ...state,
                 isRecording: false
             }
-            
+
             socket.emit('/clientv2/recording/stop', state.recordingId)
 
             return state
-        
+
         case "ENTERING_COMPLEX_SYMPTOM":
-            
+
             state = {
-                ...state, 
-                complexSymptomState: state.complexSymptomState ? null : action.payload 
+                ...state,
+                complexSymptomState: state.complexSymptomState ? null : action.payload
             }
 
             return state
@@ -73,7 +82,7 @@ export const recordingReducerV2 = (state = defaultState, action) => {
         case 'REMOVE_COMPLEX_STATE':
 
             state = {
-                ...state, 
+                ...state,
                 complexSymptomState: null
             }
 
@@ -82,15 +91,15 @@ export const recordingReducerV2 = (state = defaultState, action) => {
         case 'ADD_COMPLEX_SYMPTOM':
 
             let newComplexSymptom = {
-                symptom:state.complexSymptomState, 
+                symptom: state.complexSymptomState,
+                ...recordingMeta,
                 ...action.payload,
-                recordingId: state.recordingId
             }
 
             socket.emit('/clientv2/recording/newSymptom', newComplexSymptom)
 
             state = {
-                ...state, 
+                ...state,
                 symptomArray: state.symptomArray ? [...state.symptomArray, newComplexSymptom] : [newComplexSymptom]
             }
 
@@ -99,7 +108,7 @@ export const recordingReducerV2 = (state = defaultState, action) => {
         case 'SUBMIT_RATINGS':
 
             let newOverall = {
-                recordingId: state.recordingId,
+                ...recordingMeta,
                 ...action.payload,
             }
 
