@@ -148,7 +148,8 @@ io.on('connection', socket => {
                 recordingId:recordingId,
                 hardwareRecordingNumber:hardwareRecordingNumber, 
                 deviceNumber:deviceNumber,
-                username: username
+                username: username,
+                timestamp: new Date(),
             })
 
             console.log(await newRecording)
@@ -163,7 +164,8 @@ io.on('connection', socket => {
 
     socket.on('/clientv2/recording/newSymptom', async symptom => {
         let newSymptom = Schemas.Symptom.create({
-            ...symptom
+            ...symptom, 
+            timestamp: new Date(),
         })
 
         console.log(await newSymptom)
@@ -180,7 +182,8 @@ io.on('connection', socket => {
         console.log(rating)
 
         let newOverall = Schemas.Rating.create({
-            ...rating
+            ...rating, 
+            timestamp: new Date(),
         })
 
         console.log(await newOverall)
