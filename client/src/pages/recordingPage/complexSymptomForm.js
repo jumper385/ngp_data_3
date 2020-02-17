@@ -2,6 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { FormButtonContainer, SubmitButton, TextInput } from '../../components/forms/unifiedInput/formInputs'
 import { useForm } from 'react-hook-form'
+import styled from 'styled-components'
+
+export const BubbleButton = styled.button`
+    border:none;
+    font-size:9pt;
+    text-transform:uppercase;
+    font-weight:bold;
+    color:rgba(0,0,0,.24);
+    background:none;
+    padding:9pt 36pt;
+    text-align:center;
+    display:inline-block;
+`
 
 const ComplexSymptomForm = props => {
 
@@ -10,8 +23,15 @@ const ComplexSymptomForm = props => {
     })
 
     const onSubmit = e => {
-        console.log(e)
-        props.ADD_COMPLEX_SYMPTOM({symptom:props.recordingReducer.complexSymptomState, ...e})
+
+        let reduxPayload = {
+            ...e, 
+            username: props.metaReducer.username, 
+            recordingId: props.recordingReducer.recordingId
+        }
+
+        console.log(reduxPayload)
+        props.ADD_COMPLEX_SYMPTOM({symptom:props.recordingReducer.complexSymptomState, ...reduxPayload})
         props.REMOVE_COMPLEX_STATE()
         reset()
     }
@@ -61,6 +81,7 @@ const ComplexSymptomForm = props => {
                     <br />
 
                     <FormButtonContainer style={{ width: '100%' }}>
+                        <BubbleButton onClick={props.REMOVE_COMPLEX_STATE}>Cancel</BubbleButton>
                         <SubmitButton style={{ width: '100%' }} type='submit' value='Submit' />
                     </FormButtonContainer>
 
@@ -111,9 +132,9 @@ const ComplexSymptomForm = props => {
                     <br />
 
                     <FormButtonContainer style={{ width: '100%' }}>
+                        <BubbleButton onClick={props.REMOVE_COMPLEX_STATE}>Cancel</BubbleButton>
                         <SubmitButton style={{ width: '100%' }} type='submit' value='Submit' />
                     </FormButtonContainer>
-
                 </form>
             )
 
@@ -161,6 +182,7 @@ const ComplexSymptomForm = props => {
                     <br />
 
                     <FormButtonContainer style={{ width: '100%' }}>
+                        <BubbleButton onClick={props.REMOVE_COMPLEX_STATE}>Cancel</BubbleButton>
                         <SubmitButton style={{ width: '100%' }} type='submit' value='Submit' />
                     </FormButtonContainer>
 
@@ -211,6 +233,7 @@ const ComplexSymptomForm = props => {
                     <br />
 
                     <FormButtonContainer style={{ width: '100%' }}>
+                        <BubbleButton onClick={props.REMOVE_COMPLEX_STATE}>Cancel</BubbleButton>
                         <SubmitButton style={{ width: '100%' }} type='submit' value='Submit' />
                     </FormButtonContainer>
 
@@ -268,6 +291,7 @@ const ComplexSymptomForm = props => {
                     <br />
 
                     <FormButtonContainer style={{ width: '100%' }}>
+                        <BubbleButton onClick={props.REMOVE_COMPLEX_STATE}>Cancel</BubbleButton>
                         <SubmitButton style={{ width: '100%' }} type='submit' value='Submit' />
                     </FormButtonContainer>
 
@@ -276,7 +300,7 @@ const ComplexSymptomForm = props => {
 
         default:
             return (
-                <h1>Hello WOrld</h1>
+                null
             )
     }
 }
@@ -284,7 +308,8 @@ const ComplexSymptomForm = props => {
 const mapStateToProps = state => ({ ...state })
 const mapDispatchToProps = dispatch => ({
     REMOVE_COMPLEX_STATE: e => dispatch({ type: 'REMOVE_COMPLEX_STATE' }),
-    ADD_COMPLEX_SYMPTOM: e => dispatch({type:"ADD_COMPLEX_SYMPTOM", payload:e})
+    ADD_COMPLEX_SYMPTOM: e => dispatch({type:"ADD_COMPLEX_SYMPTOM", payload:e}),
+    REMOVE_COMPLEX_STATE: e => dispatch({type:'REMOVE_COMPLEX_STATE'})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ComplexSymptomForm)

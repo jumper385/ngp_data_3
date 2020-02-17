@@ -1,13 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import PreRecordingPage from './PreRecordingPage'
 import DataCollection from './DataCollection'
 import OverallRating from './OverallRating'
+import { socket } from '../../serverSocket'
 
 const RecordingPageV2 = props => {
-
-    console.log(props)
 
     switch (props.recordingReducer.currentPage) {
         case 0:
@@ -30,6 +29,7 @@ const RecordingPageV2 = props => {
 const mapStateToProps = state => ({ ...state })
 const mapDispatchToProps = dispatch => ({
     MOVE_PAGE: pageNumber => dispatch({ type: 'MOVE_PAGE', payload: pageNumber }),
-    DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: { symptom: payload } })
+    DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: { symptom: payload } }),
+    CONNECT_SOCKET: e => dispatch({ type: "CONNECT_SOCKET", payload: e })
 })
 export default connect(mapStateToProps, mapDispatchToProps)(RecordingPageV2)

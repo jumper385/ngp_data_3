@@ -137,6 +137,56 @@ io.on('connection', socket => {
         io.emit('master/meta/disconnect', `socket ${socket.id} disconnected`)
     })
 
+
+    // CLIENT V2 STUFF :D
+
+    socket.on('/clientv2/recording', async ({recordingId, hardwareRecordingNumber, deviceNumber, username}) => {
+        if(recordingId){
+            
+            const newRecording = Schemas.Recording.create({
+                startTime: new Date(),
+                recordingId:recordingId,
+                hardwareRecordingNumber:hardwareRecordingNumber, 
+                deviceNumber:deviceNumber,
+                username: username
+            })
+
+            console.log(await newRecording)
+
+            socket.emit('/clientv2/recording/response', {
+                payload: newRecording, 
+                status: 'success'
+            })
+
+        }
+    })
+
+    socket.on('/clientv2/recording/newSymptom', async symptom => {
+        let newSymptom = Schemas.Symptom.create({
+            ...symptom
+        })
+
+        console.log(await newSymptom)
+
+    })
+
+    socket.on('/clientv2/recording/stop', async recordingId => {
+        let updated = Schemas.Recording.findOneAndUpdate({recordingId:recordingId}, {endTime: new Date()})
+        console.log(await updated)
+    })
+
+    socket.on('/clientv2/recording/newOverall', async rating => {
+        
+        console.log(rating)
+
+        let newOverall = Schemas.Rating.create({
+            ...rating
+        })
+
+        console.log(await newOverall)
+
+    })
+
 })
 
 app.get('/', (req, res) => {

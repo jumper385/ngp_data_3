@@ -12,15 +12,24 @@ const OverallRating = props => {
 
     let { register, handleSubmit, reset, errors } = useForm({
         defaultValues: {
-            overall: 5,
-            abdPain: 5,
-            bloating: 5,
-            wind: 5
+            overall: null,
+            abdPain: null,
+            bloating: null,
+            wind: null
         }
     })
 
     const onSubmit = e => {
+
+        let newRating = {
+            username: props.metaReducer.username, 
+            recordingId: props.recordingReducer.recordingId, 
+            ...e,
+        }
+
         history.push('/')
+        props.SUBMIT_RATINGS(newRating)
+        props.RESET_RECORDING()
         reset()
     }
 
@@ -98,8 +107,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    MOVE_PAGE: pageNumber => dispatch({ type: 'MOVE_PAGE', payload: pageNumber }),
-    DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: payload })
+    DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: payload }),
+    RESET_RECORDING: e => dispatch({type: 'RESET_RECORDING'}),
+    SUBMIT_RATINGS: e => dispatch({type:'SUBMIT_RATINGS', payload:e})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverallRating)

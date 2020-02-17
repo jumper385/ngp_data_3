@@ -4,13 +4,24 @@ import { animated, useSpring } from 'react-spring'
 import { PageBase } from '../pageBase'
 import { useForm } from 'react-hook-form'
 import { TextInput, FormButtonContainer, SubmitButton } from '../../components/forms/unifiedInput/formInputs'
+import { socket } from '../../serverSocket'
+import shortid from 'shortid'
 
 const PreRecordingPage = props => {
 
     let { register, handleSubmit, reset, errors } = useForm()
 
     const onSubmit = e => {
-        props.DEVICE_META(e)
+
+        let recordingObject = {
+            recordingId: shortid.generate(),
+            ...e,
+            username: props.metaReducer.username
+        }
+
+        socket.emit('/clientv2/recording', recordingObject)
+
+        props.DEVICE_META(recordingObject)
         props.MOVE_PAGE(1)
         reset()
     }

@@ -49,8 +49,6 @@ const RecordingStatusBar = styled.div`
 
 const App = props => {
 
-  console.log(process.env)
-
   let [cookies, setCookies] = useCookies()
 
   const onFoodSubmit = foods => {
@@ -62,13 +60,11 @@ const App = props => {
   }
 
   socket.on('server/login/response', response => {
-    console.log(response)
     setCookies(['jwt'], response.jwt)
     setCookies(['loggedIn'], response.loggedIn)
-    console.log(cookies)
   })
 
-  if(cookies.loggedIn){
+  if(cookies.loggedIn && props.metaReducer.username){
 
     return(
       <Router>

@@ -199,9 +199,7 @@ const DataCollection = props => {
     return (
 
         <Timer startImmediately={false} lastUnit='m'>
-            {({ start, resume, pause, reset, timerState }) => {
-
-                console.log(timerState)
+            {({ start, resume, pause, reset }) => {
 
                 const recordButtonPress = () => {
                     if (props.recordingReducer.isRecording) {
@@ -240,19 +238,35 @@ const DataCollection = props => {
                             <p className='holderTitle'>Simple Symptoms</p>
                             <SymptomContainer>
 
-                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('burp')}>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
+                                    symptom:'burp', 
+                                    recordingid:props.recordingReducer.recordingId, 
+                                    username: props.metaReducer.username,
+                                })}>
                                     <p>Burp</p>
                                 </div>
 
-                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('urgeToPoo')}>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
+                                    symptom:'urgeToPoo', 
+                                    recordingid:props.recordingReducer.recordingId, 
+                                    username: props.metaReducer.username,
+                                })}>
                                     <p>Urge to Poo</p>
                                 </div>
 
-                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('fart')}>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
+                                    symptom:'fart', 
+                                    recordingid:props.recordingReducer.recordingId, 
+                                    username: props.metaReducer.username,
+                                })}>
                                     <p>Fart</p>
                                 </div>
 
-                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM('gurgle')}>
+                                <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
+                                    symptom:'gurgle', 
+                                    recordingid:props.recordingReducer.recordingId, 
+                                    username: props.metaReducer.username,
+                                })}>
                                     <p>Gurgle</p>
                                 </div>
 
@@ -282,7 +296,7 @@ const DataCollection = props => {
                             </SymptomContainer>
                         </SymptomContainerHolder>
 
-                        <PageBase style={{ position: 'absolute', ...complexSlideIn}}>
+                        <PageBase style={{ position: 'absolute', ...complexSlideIn }}>
                             <p onClick={() => props.REMOVE_COMPLEX_STATE()}>Close</p>
                             <div className='pageHeading'>
                                 <p className='pageCategory'>Complex Symptom</p>

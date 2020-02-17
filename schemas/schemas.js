@@ -16,6 +16,7 @@ const Recording = new mongoose.Schema({
     startTime: Date,
     endTime: Date,
     hardwareRecordingNumber:Number,
+    deviceNumber: Number,
 })
 
 const Symptom = new mongoose.Schema({

@@ -29,6 +29,19 @@ export const SubmitButton = styled.input`
     box-shadow: 0 0 9pt rgba(0,0,0,.12)
 `
 
+export const BubbleButton = styled.button`
+    border:none;
+    font-size:9pt;
+    text-transform:uppercase;
+    font-weight:bold;
+    color:rgba(0,0,0,.24);
+    padding:9pt 36pt;
+    text-align:center;
+    display:inline-block;
+    box-shadow: 0 0 9pt rgba(0,0,0,.12)
+`
+
+
 export const FlatLink = styled(Link)`
     font-weight:bold;
     text-transform:uppercase;

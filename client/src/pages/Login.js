@@ -21,6 +21,8 @@ const Login = props => {
     const { register, handleSubmit } = useForm()
 
     const onSubmit = e => {
+        console.log(e)
+        props.ADD_USER_DETAILS(e.username)
         socket.emit('client/login/submit', e)
     }
 
@@ -54,7 +56,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    ADD_JWT: e => dispatch({type:"ADD_JWT", payload:e})
+    ADD_JWT: e => dispatch({type:"ADD_JWT", payload:e}),
+    ADD_USER_DETAILS: e => dispatch({type:'ADD_USER_DETAILS', payload:e})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

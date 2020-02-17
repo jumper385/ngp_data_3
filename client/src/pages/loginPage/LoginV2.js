@@ -9,6 +9,7 @@ const LoginV2 = props => {
     let { register, watch, reset, handleSubmit, errors } = useForm()
 
     const onSubmit = e => {
+        props.ADD_USER_DETAILS(e.username)
         socket.emit('client/login/submit', e)
         reset()
     }
@@ -52,7 +53,8 @@ const LoginV2 = props => {
 const mapStateToProps = state => ({ ...state })
 
 const mapDispatchToProps = dispatch => ({
-    ADD_JWT: e => dispatch({type:"ADD_JWT", payload:e})
+    ADD_JWT: e => dispatch({type:"ADD_JWT", payload:e}),
+    ADD_USER_DETAILS: e => dispatch({type:'ADD_USER_DETAILS', payload:e})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginV2)
