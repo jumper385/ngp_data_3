@@ -21,7 +21,7 @@ const metaReducer = (state = defaultState, action) => {
         case 'ADD_USER_DETAILS':
             state = {
                 ...state,
-                username: action.payload
+                username: action.payload.toLowerCase()
             }
             return state
             

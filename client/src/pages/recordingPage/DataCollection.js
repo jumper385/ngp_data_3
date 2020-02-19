@@ -215,7 +215,7 @@ const DataCollection = props => {
                 }
 
                 return (
-                    <PageBase style={colorDarken}>
+                    <PageBase style={{...colorDarken, paddingBottom:'64pt'}}>
                         <RecordingDisplay style={slideInTop}>
                             <div className='recordingDurationContainer'>
                                 <p className='recordingDurationLabel'>Recording Duration</p>
@@ -233,6 +233,8 @@ const DataCollection = props => {
                         <RecordButton style={buttonAnimation} onClick={recordButtonPress}>
                             <FontAwesomeIcon className='icon' icon={props.recordingReducer.isRecording ? faStop : faMicrophoneAlt} />
                         </RecordButton>
+
+                        <p style={{position:'absolute', top:'275pt', width:'130pt', left:'125pt', fontSize:'9pt', color:'rgba(0,0,0,.24)'}}>When you're ready, press this button and the device's start button at the same time</p>
 
                         <SymptomContainerHolder style={{ top: '171pt', ...slideFromRight }}>
                             <p className='holderTitle'>Simple Symptoms</p>

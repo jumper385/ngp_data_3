@@ -47,7 +47,7 @@ const OverallRating = props => {
 
     return (
 
-        <PageBase style={{marginBottom:'30pt'}}>
+        <PageBase style={{paddingBottom:'64pt'}}>
 
             <div style={fadeIn} className='pageHeading'>
                 <animated.p style={fadeIn} className='pageCategory'>Recording - Final Step</animated.p>

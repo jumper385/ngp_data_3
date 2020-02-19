@@ -43,7 +43,7 @@ export const FixedNavBar = props => {
             <NavLink className='navLink' to='/recording'><i className='material-icons'>mic</i></NavLink>
             <NavLink className='navLink' to='/addFood'><i className='material-icons'>fastfood</i></NavLink>
             <NavLink className='navLink' to='/addContext'><i className='material-icons'>chrome_reader_mode</i></NavLink>
-            <NavLink className='navLink' to='/test'><i>🧪</i></NavLink>
+            {process.env.NODE_ENV === 'development' ? <NavLink className='navLink' to='/test'><i>🧪</i></NavLink> : null}
         </FixedNav>
     )
 }

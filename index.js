@@ -219,7 +219,7 @@ app.get('/api', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
 
-    let userQuery = await Schemas.User.find({ username: req.body.username })
+    let userQuery = await Schemas.User.find({ username: req.body.username.toLowerCase() })
     console.log(userQuery)
 
     if (userQuery.length >= 1) {
@@ -250,6 +250,8 @@ app.post('/api/login', async (req, res) => {
 app.delete('/api/login', async (req, res) => {
 
     let { username, password } = req.body
+
+    username = username.toLowerCase()
 
     const isPasswordCorrect = await delayedPasswordCheck(password, process.env.MASTER_KEY)
 
