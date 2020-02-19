@@ -79,12 +79,11 @@ const App = props => {
           <Switch>
   
             <Route exact path='/'><Home /></Route>
-            <Route path='/recording'><Recording/></Route>
+            <Route path='/recording'><RecordingV2 /></Route>
             <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
             <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
             <Route path='/login'><LoginV2 /></Route>
             {process.env.NODE_ENV === 'development' && <Route path='/test'><RecordingV2 /></Route>}
-            <Route path='/test'><RecordingV2 /></Route>
 
           </Switch>
           <GlobalStyle />
