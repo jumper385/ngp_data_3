@@ -298,7 +298,7 @@ const DataCollection = props => {
                             </SymptomContainer>
                         </SymptomContainerHolder>
 
-                        <PageBase style={{ position: 'absolute', ...complexSlideIn }}>
+                        <PageBase style={{ position: 'absolute', paddingBottom:'64pt', ...complexSlideIn }}>
                             <p onClick={() => props.REMOVE_COMPLEX_STATE()}>Close</p>
                             <div className='pageHeading'>
                                 <p className='pageCategory'>Complex Symptom</p>
