@@ -80,7 +80,7 @@ const StyledInput = styled.div`
 
 const VariableInputField = React.forwardRef((props, ref) => {
 
-    let { extras, type, ...configs } = props
+    let { extras, type, ...configs} = props
 
     switch (props.type) {
 
@@ -115,7 +115,7 @@ export const TextInput = props => {
     return (
         <StyledInput>
             <label to={props.name}>
-                <p className='label'>{props.label} {props.error[inputConfig.name] && <span>~ {`${props.error[inputConfig.name].type}`}</span>}</p>
+    <p className='label'>{props.label} {props.error[inputConfig.name] && <span>~ {`${props.error[inputConfig.name].type}`}</span>} {props.value && `- ${props.value}`}</p>
             </label>
             <VariableInputField ref={ref} {...inputConfig} />
             {props.hint && <p className='hint'>{props.hint}</p>}

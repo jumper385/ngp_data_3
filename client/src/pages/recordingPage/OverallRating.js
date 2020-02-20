@@ -10,20 +10,20 @@ const OverallRating = props => {
 
     let history = useHistory()
 
-    let { register, handleSubmit, reset, errors } = useForm({
+    let { register, handleSubmit, reset, errors, watch } = useForm({
         defaultValues: {
-            overall: null,
-            abdPain: null,
-            bloating: null,
-            wind: null
+            overall: 5,
+            abdPain: 5,
+            bloating: 5,
+            wind: 5
         }
     })
 
     const onSubmit = e => {
 
         let newRating = {
-            username: props.metaReducer.username, 
-            recordingId: props.recordingReducer.recordingId, 
+            username: props.metaReducer.username,
+            recordingId: props.recordingReducer.recordingId,
             ...e,
         }
 
@@ -47,7 +47,7 @@ const OverallRating = props => {
 
     return (
 
-        <PageBase style={{paddingBottom:'64pt'}}>
+        <PageBase style={{ paddingBottom: '64pt' }}>
 
             <div style={fadeIn} className='pageHeading'>
                 <animated.p style={fadeIn} className='pageCategory'>Recording - Final Step</animated.p>
@@ -63,7 +63,7 @@ const OverallRating = props => {
                     min: 0,
                     max: 10,
                     ref: register({ required: true }),
-                }} />
+                }} value={watch('overall')} />
 
                 <TextInput label='Abdominal Pain' error={errors} styling={{
                     name: 'abdPain',
@@ -71,7 +71,7 @@ const OverallRating = props => {
                     min: 0,
                     max: 10,
                     ref: register({ required: true }),
-                }} />
+                }} value={watch('abdPain')} />
 
                 <TextInput label='Bloating' error={errors} styling={{
                     name: 'bloating',
@@ -79,7 +79,7 @@ const OverallRating = props => {
                     min: 0,
                     max: 10,
                     ref: register({ required: true }),
-                }} />
+                }} value={watch('bloating')} />
 
                 <TextInput label='Wind' error={errors} styling={{
                     name: 'wind',
@@ -87,7 +87,7 @@ const OverallRating = props => {
                     min: 0,
                     max: 10,
                     ref: register({ required: true }),
-                }} />
+                }} value={watch('wind')} />
 
                 <br />
 
@@ -108,8 +108,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     DEVICE_META: payload => dispatch({ type: 'DEVICE_META', payload: payload }),
-    RESET_RECORDING: e => dispatch({type: 'RESET_RECORDING'}),
-    SUBMIT_RATINGS: e => dispatch({type:'SUBMIT_RATINGS', payload:e})
+    RESET_RECORDING: e => dispatch({ type: 'RESET_RECORDING' }),
+    SUBMIT_RATINGS: e => dispatch({ type: 'SUBMIT_RATINGS', payload: e })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OverallRating)

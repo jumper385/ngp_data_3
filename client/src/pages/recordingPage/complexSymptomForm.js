@@ -18,7 +18,7 @@ export const BubbleButton = styled.button`
 
 const ComplexSymptomForm = props => {
 
-    let { register, errors, handleSubmit, reset } = useForm({
+    let { register, errors, handleSubmit, reset, watch} = useForm({
         defaultValues:{severity:'0'}
     })
 
@@ -46,7 +46,7 @@ const ComplexSymptomForm = props => {
                         min: 0,
                         max: 10,
                         ref: register({ required: true })
-                    }} />
+                    }} value={watch('severity')}/>
 
                     <TextInput label='Location' error={errors} styling={{
                         name: 'location',
@@ -97,7 +97,7 @@ const ComplexSymptomForm = props => {
                         min: 0,
                         max: 10,
                         ref: register({ required: true })
-                    }} />
+                    }} value={watch('severity')}/>
 
                     <TextInput label='Location' error={errors} styling={{
                         name: 'location',
@@ -147,7 +147,7 @@ const ComplexSymptomForm = props => {
                         min: 0,
                         max: 10,
                         ref: register({ required: true })
-                    }} />
+                    }} value={watch('severity')}/>
 
                     <TextInput label='Location' error={errors} styling={{
                         name: 'location',
@@ -198,7 +198,7 @@ const ComplexSymptomForm = props => {
                         min: 0,
                         max: 10,
                         ref: register({ required: true })
-                    }} />
+                    }} value={watch('severity')}/>
 
                     <TextInput label='Location' error={errors} styling={{
                         name: 'location',
@@ -256,7 +256,7 @@ const ComplexSymptomForm = props => {
                         min: 0,
                         max: 10,
                         ref: register({ required: true })
-                    }} />
+                    }} value={watch('severity')}/>
 
                     <TextInput label='Location' error={errors} styling={{
                         name: 'location',
