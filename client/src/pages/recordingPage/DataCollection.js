@@ -215,7 +215,10 @@ const DataCollection = props => {
                 }
 
                 return (
-                    <PageBase style={colorDarken}>
+                    <PageBase style={{ ...colorDarken, paddingBottom: '64pt' }}>
+                        {props.recordingReducer.symptomArray ?
+                            <p style={{ position: 'absolute', top: '24pt', right: '32pt', zIndex:'103', color:'rgba(0,0,0,.24)'}}>({props.recordingReducer.symptomArray && props.recordingReducer.symptomArray.length}) - a {props.recordingReducer.symptomArray && props.recordingReducer.symptomArray[props.recordingReducer.symptomArray.length - 1].symptom} was added</p> :
+                            'nothing..'}
                         <RecordingDisplay style={slideInTop}>
                             <div className='recordingDurationContainer'>
                                 <p className='recordingDurationLabel'>Recording Duration</p>
@@ -234,37 +237,39 @@ const DataCollection = props => {
                             <FontAwesomeIcon className='icon' icon={props.recordingReducer.isRecording ? faStop : faMicrophoneAlt} />
                         </RecordButton>
 
+                        <p style={{ position: 'absolute', top: '275pt', width: '130pt', left: '125pt', fontSize: '9pt', color: 'rgba(0,0,0,.24)' }}>When you're ready, press this button and the device's start button at the same time</p>
+
                         <SymptomContainerHolder style={{ top: '171pt', ...slideFromRight }}>
                             <p className='holderTitle'>Simple Symptoms</p>
                             <SymptomContainer>
 
                                 <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
-                                    symptom:'burp', 
-                                    recordingid:props.recordingReducer.recordingId, 
+                                    symptom: 'burp',
+                                    recordingid: props.recordingReducer.recordingId,
                                     username: props.metaReducer.username,
                                 })}>
                                     <p>Burp</p>
                                 </div>
 
                                 <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
-                                    symptom:'urgeToPoo', 
-                                    recordingid:props.recordingReducer.recordingId, 
+                                    symptom: 'urgeToPoo',
+                                    recordingid: props.recordingReducer.recordingId,
                                     username: props.metaReducer.username,
                                 })}>
                                     <p>Urge to Poo</p>
                                 </div>
 
                                 <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
-                                    symptom:'fart', 
-                                    recordingid:props.recordingReducer.recordingId, 
+                                    symptom: 'fart',
+                                    recordingid: props.recordingReducer.recordingId,
                                     username: props.metaReducer.username,
                                 })}>
                                     <p>Fart</p>
                                 </div>
 
                                 <div className='symptomCard' onClick={() => props.ADD_SIMPLE_SYMPTOM({
-                                    symptom:'gurgle', 
-                                    recordingid:props.recordingReducer.recordingId, 
+                                    symptom: 'gurgle',
+                                    recordingid: props.recordingReducer.recordingId,
                                     username: props.metaReducer.username,
                                 })}>
                                     <p>Gurgle</p>
@@ -296,7 +301,7 @@ const DataCollection = props => {
                             </SymptomContainer>
                         </SymptomContainerHolder>
 
-                        <PageBase style={{ position: 'absolute', ...complexSlideIn }}>
+                        <PageBase style={{ position: 'absolute', paddingBottom: '64pt', ...complexSlideIn }}>
                             <p onClick={() => props.REMOVE_COMPLEX_STATE()}>Close</p>
                             <div className='pageHeading'>
                                 <p className='pageCategory'>Complex Symptom</p>

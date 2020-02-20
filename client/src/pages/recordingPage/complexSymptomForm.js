@@ -242,7 +242,7 @@ const ComplexSymptomForm = props => {
 
         case 'custom':
             return (
-                <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: '300pt', margin: '0 auto' }}>
+                <form onSubmit={handleSubmit(onSubmit)} style={{ maxWidth: '300pt', margin: '0 auto'}}>
                     <TextInput label='Symptom' error={errors} styling={{
                         name: 'symptom',
                         type: 'text',
