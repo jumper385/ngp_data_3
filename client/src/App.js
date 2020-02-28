@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import { useCookies } from 'react-cookie'
 import LoginV2 from './pages/loginPage/LoginV2';
 import RecordingV2 from './pages/recordingPage/RecordingV2';
+const jwt = require('jsonwebtoken')
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -60,8 +61,8 @@ const App = props => {
   }
 
   socket.on('server/login/response', response => {
-    setCookies(['jwt'], response.jwt)
-    setCookies(['loggedIn'], response.loggedIn)
+    console.log('login attempt')
+    props.ADD_USER_DETAILS(response)
   })
 
   if(cookies.loggedIn && props.metaReducer.username){
@@ -105,4 +106,8 @@ const mapStateToProps = state => ({
   ...state
 })
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = dispatch => ({
+  ADD_USER_DETAILS: e => dispatch({type:'ADD_USER_DETAILS', payload:e})
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,6 +1,7 @@
 import { createStore, combineReducers } from 'redux'
 import { currentRecording } from './store/recordingReducer'
 import { recordingReducerV2 } from './store/recordingReducerV2'
+const JWT = require('jsonwebtoken')
 
 const defaultState = {}
 
@@ -19,10 +20,18 @@ const metaReducer = (state = defaultState, action) => {
             return state
 
         case 'ADD_USER_DETAILS':
+
+            console.log(action.payload)
+
+            let jwtData = JWT.verify(action.payload.jwt, process.env.JWT_KEY ?? 'yellowMonkey2020')
+
+            console.log(jwtData._doc)
+
             state = {
                 ...state,
-                username: action.payload.toLowerCase()
+                username: jwtData._doc.username.toLowerCase()
             }
+
             return state
             
         default:

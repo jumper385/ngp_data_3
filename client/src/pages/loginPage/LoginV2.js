@@ -9,7 +9,7 @@ const LoginV2 = props => {
     let { register, watch, reset, handleSubmit, errors } = useForm()
 
     const onSubmit = e => {
-        props.ADD_USER_DETAILS(e.username)
+        // props.ADD_USER_DETAILS(e.username)
         socket.emit('client/login/submit', e)
         reset()
     }

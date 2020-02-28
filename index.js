@@ -125,7 +125,7 @@ io.on('connection', socket => {
         if (userQuery.username === login.username) {
             let { password } = login
             let isMatch = await bcrypt.compare(password, userQuery.password)
-            const token = isMatch && await jwt.sign({ ...userQuery }, 'st18chenh')
+            const token = isMatch && await jwt.sign({ ...userQuery }, process.env.JWT_KEY)
             socket.emit('server/login/response', { loggedIn: isMatch, jwt: token })
         } else {
             socket.emit('server/login/response', { loggedIn: false, jwt: null })
