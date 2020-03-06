@@ -13,7 +13,7 @@ const FixedNav = styled.nav`
     overflow:hidden;
     box-sizing:border-box;
     display:grid;
-    grid-template-columns:1fr 1fr 1fr 1fr;
+    grid-template-columns:1fr 1fr;
     box-shadow:0 9px 16px rgba(0,0,0,.18);
     z-index:100;
 
@@ -41,8 +41,11 @@ export const FixedNavBar = props => {
         <FixedNav>
             <NavLink exact className='navLink' to='/'><i className="material-icons">home</i></NavLink>
             <NavLink className='navLink' to='/recording'><i className='material-icons'>mic</i></NavLink>
-            <NavLink className='navLink' to='/addFood'><i className='material-icons'>fastfood</i></NavLink>
-            <NavLink className='navLink' to='/addContext'><i className='material-icons'>chrome_reader_mode</i></NavLink>
+            
+            {/*Temporarily Removed*/}
+            
+            {/* <NavLink className='navLink' to='/addFood'><i className='material-icons'>fastfood</i></NavLink>
+            <NavLink className='navLink' to='/addContext'><i className='material-icons'>chrome_reader_mode</i></NavLink> */}
         </FixedNav>
     )
 }

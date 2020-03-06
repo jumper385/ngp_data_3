@@ -3,7 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom'
 import Recording from './pages/Recording';
 import Food from './pages/Food';
 import { FixedNavBar } from './navBar/FixedNavBar';
-import styled, {createGlobalStyle} from 'styled-components'
+import styled, { createGlobalStyle } from 'styled-components'
 import Context from './pages/Context';
 import { socket } from './serverSocket';
 import { connect } from 'react-redux'
@@ -53,11 +53,11 @@ const App = props => {
   let [cookies, setCookies] = useCookies()
 
   const onFoodSubmit = foods => {
-    socket.emit('client/submit/food', {...foods, timestamp:foods.timestamp})
+    socket.emit('client/submit/food', { ...foods, timestamp: foods.timestamp })
   }
 
   const onContextSubmit = context => {
-    socket.emit('client/submit/context', {...context, timestamp: context.timestamp || new Date()})
+    socket.emit('client/submit/context', { ...context, timestamp: context.timestamp || new Date() })
   }
 
   socket.on('server/login/response', response => {
@@ -65,24 +65,25 @@ const App = props => {
     props.ADD_USER_DETAILS(response)
   })
 
-  if(cookies.loggedIn && props.metaReducer.username){
+  if (props.metaReducer.username && props.metaReducer.loggedIn) {
 
-    return(
+    return (
+
       <Router>
         <StyledAppDiv className='App'>
-  
+
           <RecordingStatusBar recording={props.currentRecording.isReadyToRecord}>
             <p>{props.currentRecording.isReadyToRecord ? `You're recording...` : null}</p>
           </RecordingStatusBar>
-  
+
           <FixedNavBar />
-  
+
           <Switch>
-  
+
             <Route exact path='/'><Home /></Route>
             <Route path='/recording'><RecordingV2 /></Route>
-            <Route path='/addFood'><Food onSubmit={onFoodSubmit}/></Route>
-            <Route path='/addContext'><Context onSubmit={onContextSubmit}/></Route>
+            <Route path='/addFood'><Food onSubmit={onFoodSubmit} /></Route>
+            <Route path='/addContext'><Context onSubmit={onContextSubmit} /></Route>
             <Route path='/login'><LoginV2 /></Route>
             {process.env.NODE_ENV === 'development' && <Route path='/test'><RecordingV2 /></Route>}
 
@@ -90,13 +91,16 @@ const App = props => {
           <GlobalStyle />
         </StyledAppDiv>
       </Router>
+
     )
 
   } else {
     return (
+
       <StyledAppDiv className='App'>
         <LoginV2 />
       </StyledAppDiv>
+
     )
   }
 
@@ -107,7 +111,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  ADD_USER_DETAILS: e => dispatch({type:'ADD_USER_DETAILS', payload:e})
+  ADD_USER_DETAILS: e => dispatch({ type: 'ADD_USER_DETAILS', payload: e }),
+  ADD_JWT: e => dispatch({ type: 'ADD_JWT', payload: e })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

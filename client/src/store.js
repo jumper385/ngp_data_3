@@ -12,7 +12,12 @@ const defaultReducer = (state = defaultState, action) => {
     }
 }
 
-const metaReducer = (state = defaultState, action) => {
+const debugState = {
+    loggedIn:true,
+    username:'henry.chen',
+}
+
+const metaReducer = (state = process.env.NODE_ENV === 'development' ? debugState : defaultState, action) => {
     switch (action.type) {
         case 'ADD_JWT':
             let { loggedIn, jwt } = action.payload
@@ -21,14 +26,13 @@ const metaReducer = (state = defaultState, action) => {
 
         case 'ADD_USER_DETAILS':
 
-            console.log(action.payload)
-
             let jwtData = JWT.verify(action.payload.jwt, process.env.JWT_KEY ?? 'yellowMonkey2020')
 
             console.log(jwtData._doc)
 
             state = {
                 ...state,
+                loggedIn:jwtData && true,
                 username: jwtData._doc.username.toLowerCase()
             }
 

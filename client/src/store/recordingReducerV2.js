@@ -1,7 +1,8 @@
 import { socket } from "../serverSocket";
 
 const defaultState = {
-    currentPage: (process.env.NODE_ENV !== 'development') ? 0 : 0
+    currentPage: (process.env.NODE_ENV !== 'development') ? 0 : 1,
+    isRecording: (process.env.NODE_ENV !== 'development') ? null : true
 }
 
 export const recordingReducerV2 = (state = defaultState, action) => {

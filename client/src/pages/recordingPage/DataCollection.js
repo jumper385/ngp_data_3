@@ -229,6 +229,7 @@ const DataCollection = props => {
                                         <p className='minLabel'>min</p>
                                     </div>
                                 </div>
+                                <p style={{position:'absolute', bottom:'-24pt', left:'-81pt', fontSize:'9pt', color:'rgba(0,0,0,.24)'}}>Stop Recording</p>
                             </div>
 
                         </RecordingDisplay>
@@ -237,7 +238,7 @@ const DataCollection = props => {
                             <FontAwesomeIcon className='icon' icon={props.recordingReducer.isRecording ? faStop : faMicrophoneAlt} />
                         </RecordButton>
 
-                        <p style={{ position: 'absolute', top: '275pt', width: '130pt', left: '125pt', fontSize: '9pt', color: 'rgba(0,0,0,.24)' }}>When you're ready, press this button and the device's start button at the same time</p>
+                        <p style={{ position: 'absolute', top: '275pt', width: '130pt', left: '125pt', fontSize: '9pt', color: 'rgba(0,0,0,.24)' }}>When you're ready, press this button to start adding data.</p>
 
                         <SymptomContainerHolder style={{ top: '171pt', ...slideFromRight }}>
                             <p className='holderTitle'>Simple Symptoms</p>

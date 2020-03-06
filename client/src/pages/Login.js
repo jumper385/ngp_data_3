@@ -23,6 +23,7 @@ const Login = props => {
     const onSubmit = e => {
         console.log(e)
         props.ADD_USER_DETAILS(e.username)
+        props.ADD_JWT(e)
         socket.emit('client/login/submit', e)
     }
 
