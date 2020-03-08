@@ -1,7 +1,7 @@
 import { socket } from "../serverSocket";
 
 const defaultState = {
-    currentPage: (process.env.NODE_ENV !== 'development') ? 0 : 1,
+    currentPage: (process.env.NODE_ENV !== 'development') ? 0 : 0,
     isRecording: (process.env.NODE_ENV !== 'development') ? null : true
 }
 
@@ -86,6 +86,24 @@ export const recordingReducerV2 = (state = defaultState, action) => {
                 ...state,
                 complexSymptomState: null
             }
+
+            return state
+
+        case 'ADD_RECORDING_NUMBER':
+            
+            state = {
+                ...state, 
+                hardwareRecordingNumber:action.payload.hardwareRecordingNumber
+            }
+
+            socket.emit('/clientv2/recording/updateRecordingNumber', {
+                payload:{
+                    hardwareRecordingNumber: action.payload.hardwareRecordingNumber,
+                },
+                query:{
+                    recordingId:state.recordingId
+                }
+            })
 
             return state
 

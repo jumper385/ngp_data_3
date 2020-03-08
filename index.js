@@ -190,6 +190,12 @@ io.on('connection', socket => {
 
     })
 
+    socket.on('/clientv2/recording/updateRecordingNumber', async recordingNumber => {
+        let { payload, query } = recordingNumber
+        await Schemas.Recording.find(query).updateMany({$set:payload})
+        await Schemas.Symptom.find(query).updateMany({$set:payload})
+    })
+
 })
 
 app.get('/', (req, res) => {

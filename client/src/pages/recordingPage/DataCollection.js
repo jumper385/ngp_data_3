@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { PageBase } from '../pageBase'
 import { animated, useSpring } from 'react-spring'
 import { faMicrophoneAlt, faStop } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import Timer from 'react-compound-timer'
 import ComplexSymptomForm from './complexSymptomForm'
+import { useForm } from 'react-hook-form'
 
 const RecordButton = styled(animated.div)`
     position:absolute;
@@ -131,6 +132,8 @@ const SymptomContainer = styled(animated.div)`
 
 const DataCollection = props => {
 
+    let { register, watch, reset, handleSubmit, errors } = useForm()
+
     const buttonAnimation = useSpring({
         from: {
             transform: props.recordingReducer.isRecording ? 'translate(calc(72pt - 50%), calc(300pt - 50%)) rotate(360deg) scale(1)' : 'translate(calc(36pt  - 50%), calc(100pt - 50%)) rotate(0deg) scale(0.5)',
@@ -196,6 +199,11 @@ const DataCollection = props => {
         }
     })
 
+    const addRecNumber = e => {
+        console.log(e)
+        props.ADD_RECORDING_NUMBER(e)
+    }
+
     return (
 
         <Timer startImmediately={false} lastUnit='m'>
@@ -217,7 +225,7 @@ const DataCollection = props => {
                 return (
                     <PageBase style={{ ...colorDarken, paddingBottom: '64pt' }}>
                         {props.recordingReducer.symptomArray ?
-                            <p style={{ position: 'absolute', top: '24pt', right: '32pt', zIndex:'103', color:'rgba(0,0,0,.24)'}}>({props.recordingReducer.symptomArray && props.recordingReducer.symptomArray.length}) - a {props.recordingReducer.symptomArray && props.recordingReducer.symptomArray[props.recordingReducer.symptomArray.length - 1].symptom} was added</p> :
+                            <p style={{ position: 'absolute', top: '24pt', right: '32pt', zIndex: '103', color: 'rgba(0,0,0,.24)' }}>({props.recordingReducer.symptomArray && props.recordingReducer.symptomArray.length}) - a {props.recordingReducer.symptomArray && props.recordingReducer.symptomArray[props.recordingReducer.symptomArray.length - 1].symptom} was added</p> :
                             'nothing..'}
                         <RecordingDisplay style={slideInTop}>
                             <div className='recordingDurationContainer'>
@@ -229,9 +237,20 @@ const DataCollection = props => {
                                         <p className='minLabel'>min</p>
                                     </div>
                                 </div>
-                                <p style={{position:'absolute', bottom:'-24pt', left:'-81pt', fontSize:'9pt', color:'rgba(0,0,0,.24)'}}>Stop Recording</p>
                             </div>
-
+                            <p style={{ position: 'absolute', bottom: '24pt', left: '69pt', fontSize: '9pt', color: 'rgba(0,0,0,.24)' }}>Stop Recording</p>
+                            {!props.recordingReducer.hardwareRecordingNumber &&<form style={{ position: 'absolute', left: '24pt', top: '54pt', fontSize: '9pt' }} onSubmit={handleSubmit(addRecNumber)}>
+                                <label>Recording Number: </label>
+                                <input style={{ width: '64pt' }} name='hardwareRecordingNumber' ref={register()} type='number' />
+                                <input style={{
+                                    background: 'linear-gradient(90deg, #241034 0%, #1C0638 100%)',
+                                    border: 'none',
+                                    color: 'white',
+                                    height:'16pt',
+                                    borderRadius:'2pt',
+                                    marginLeft:'6pt'
+                                }} type='submit' value='Submit' />
+                            </form>}
                         </RecordingDisplay>
 
                         <RecordButton style={buttonAnimation} onClick={recordButtonPress}>
@@ -328,6 +347,7 @@ const mapDispatchToProps = dispatch => ({
     ENTERING_COMPLEX_SYMPTOM: e => dispatch({ type: 'ENTERING_COMPLEX_SYMPTOM', payload: e }),
     REMOVE_COMPLEX_STATE: e => dispatch({ type: 'REMOVE_COMPLEX_STATE' }),
     MOVE_PAGE: pageNumber => dispatch({ type: 'MOVE_PAGE', payload: pageNumber }),
+    ADD_RECORDING_NUMBER: e => dispatch({ type: 'ADD_RECORDING_NUMBER', payload: e })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataCollection)

@@ -58,13 +58,13 @@ const PreRecordingPage = props => {
                     pattern:'[0-9]+',
                 }} hint='This is the number located on the back of your device' />
 
-                <TextInput label='Hardware Recording Number' error={errors} styling={{
+                {/* <TextInput label='Hardware Recording Number' error={errors} styling={{
                     name: 'hardwareRecordingNumber',
                     type: 'number',
                     placeholder: 'What\'s the recording number on the screen?',
                     ref: register({ required: true }),
                     pattern:'[0-9]+',
-                }} hint='This is the number located on the device display' />
+                }} hint='This is the number located on the device display' /> */}
 
                 <br />
 
